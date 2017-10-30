@@ -1,18 +1,18 @@
 {
     "appid"       : "4cf1ba95-2779-4d40-831a-1e47682ada5f",
     "name"      : "PasteBin",
-    "description" : "This app implements an investigative action of 'fetch paste' to be triggered by email alerts sent from PasteBin.",
+    "description" : "This app allows text retrieval from PasteBin",
     "publisher": "PingTrip",
     "package_name": "pingtrip_pastebin",
     "type": "information",
-    "license": "Copyright (c) Dave 'PingTrip' Crawford 2016",
+    "license": "Copyright (c) Dave 'PingTrip' Crawford 2016-2017",
     "main_module" : "pastebin_connector.pyc",
     "app_version": "1.5.1",
     "utctime_updated": "2017-04-06T13:37:00.000000Z",
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "2.0.264",
+    "min_phantom_version": "3.0.251",
     "logo": "pastebin.png",
     "configuration": {
           "phantom_rest_api_host": {
@@ -24,7 +24,7 @@
           },
           "phantom_rest_api_token": {
             "description": "Phantom REST API token",
-            "data_type": "string",
+            "data_type": "password",
             "required": true,
             "order": 1
           }
