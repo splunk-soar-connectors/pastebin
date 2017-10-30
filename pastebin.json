@@ -7,7 +7,7 @@
     "type": "information",
     "license": "Copyright (c) Dave 'PingTrip' Crawford 2016-2017",
     "main_module" : "pastebin_connector.pyc",
-    "app_version": "1.5.1",
+    "app_version": "1.5.2",
     "utctime_updated": "2017-04-06T13:37:00.000000Z",
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
