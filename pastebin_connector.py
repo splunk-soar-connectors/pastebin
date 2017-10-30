@@ -54,7 +54,7 @@ class PasteBinConnector(BaseConnector):
     def _add_file_to_vault(self, file_name, container_id, file_data):
 
         success = True
-        fname = "/vault/tmp/{0}".format(file_name)
+        fname = "/opt/phantom/vault/tmp/{0}".format(file_name)
 
         try:
             with open(fname, "w") as outfile:
@@ -77,7 +77,7 @@ class PasteBinConnector(BaseConnector):
 
         try:
             self.save_progress("Fetching paste with id {0}".format(pasteid))
-            results = requests.get("https://pastebin.com/{0}".format(pasteid), verify=False)
+            results = requests.get("https://pastebin.com/{0}".format(pasteid), verify=True)
         except Exception as e:
             action_result.set_status(phantom.APP_ERROR, "Failed to download paste: ", e)
             return action_result.get_status()
