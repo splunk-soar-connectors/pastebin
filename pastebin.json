@@ -3,7 +3,7 @@
     "name"      : "PasteBin",
     "description" : "This app allows text retrieval from PasteBin",
     "publisher": "PingTrip",
-    "package_name": "pingtrip_pastebin",
+    "package_name": "phantom_pingtrip_pastebin",
     "type": "information",
     "license": "Copyright (c) Dave 'PingTrip' Crawford 2016-2017",
     "main_module" : "pastebin_connector.pyc",
