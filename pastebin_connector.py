@@ -124,7 +124,7 @@ class PasteBinConnector(BaseConnector):
     def handle_action(self, param):
         actn_req = self.get_action_identifier()
 
-        if actn_req == 'fetch_paste':
+        if actn_req == 'get_data':
             self._handle_fetch_paste(param)
 
         return self.get_status()
