@@ -92,7 +92,10 @@
           {
             "data_path": "action_result.parameter.paste_url",
             "data_type": "string",
-            "contains": ["url"]
+            "contains": ["url"],
+            "example_values": [
+                        "https://pastebin.com/caCMuQtT"
+                    ]
           },
           {
             "data_path": "summary.total_objects",
