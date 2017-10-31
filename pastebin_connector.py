@@ -121,13 +121,45 @@ class PasteBinConnector(BaseConnector):
 
         return phantom.APP_SUCCESS
 
+    def _handle_test_connectivity(self, param):
+
+        # Add an action result object to self (BaseConnector) to represent the action for this param
+        action_result = self.add_action_result(ActionResult(dict(param)))
+
+        # NOTE: test connectivity does _NOT_ take any parameters
+        # i.e. the param dictionary passed to this handler will be empty.
+        # Also typically it does not add any data into an action_result either.
+        # The status and progress messages are more important.
+
+        try:
+            self.save_progress("Connecting to endpoint")
+            results = requests.get("https://pastebin.com/caCMuQtT", verify=True)
+
+            soup = BeautifulSoup(results.content, 'html.parser')
+            if soup.title.string == "Phantom Test Paste - Pastebin.com":
+                self.save_progress("Test Connectivity Passed")
+                return action_result.set_status(phantom.APP_SUCCESS)
+            else:
+                return action_result.set_status(phantom.APP_ERROR, "Test Connectivity Failed")
+
+        except Exception as e:
+            action_result.set_status(phantom.APP_ERROR, "Test Connectivity Failed", e)
+            return action_result.get_status()
+
+ 
     def handle_action(self, param):
-        actn_req = self.get_action_identifier()
+       ret_val = phantom.APP_SUCCESS
+       actn_req = self.get_action_identifier()
+       self.debug_print("action_id", self.get_action_identifier())
 
-        if actn_req == 'get_data':
-            self._handle_fetch_paste(param)
+       if actn_req == 'get_data':
+           ret_val = self._handle_fetch_paste(param)
+        
+       elif actn_req == 'test_connectivity':
+           ret_val = self._handle_test_connectivity(param)
 
-        return self.get_status()
+       return ret_val
+       #return self.get_status()
 
 
 if __name__ == '__main__':
