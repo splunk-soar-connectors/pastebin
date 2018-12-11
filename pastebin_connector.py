@@ -31,9 +31,10 @@ class PasteBinConnector(BaseConnector):
 
         config = self.get_config()
         headers = {"ph-auth-token": str(config['phantom_rest_api_token'])}
+        phantom_base_url = self.get_phantom_base_url()
 
         try:
-            resp = requests.get("https://{0}/rest/container/{1}".format(config['phantom_rest_api_host'], container_id), headers=headers, verify=False)
+            resp = requests.get(phantom_base_url + "/rest/container/{}".format(container_id), headers=headers, verify=False)
             cntnr_json = resp.json()
             keyword = cntnr_json['name'].split("keyword: ", 1)[1]
             return (keyword)
@@ -54,7 +55,8 @@ class PasteBinConnector(BaseConnector):
     def _add_file_to_vault(self, file_name, container_id, file_data):
 
         success = True
-        fname = "/opt/phantom/vault/tmp/{0}".format(file_name)
+
+        fname = Vault.get_vault_tmp_dir() + "/{}".format(file_name)
 
         try:
             with open(fname, "w") as outfile:
@@ -146,7 +148,7 @@ class PasteBinConnector(BaseConnector):
             action_result.set_status(phantom.APP_ERROR, "Test Connectivity Failed", e)
             return action_result.get_status()
 
- 
+
     def handle_action(self, param):
        ret_val = phantom.APP_SUCCESS
        actn_req = self.get_action_identifier()
@@ -154,7 +156,7 @@ class PasteBinConnector(BaseConnector):
 
        if actn_req == 'get_data':
            ret_val = self._handle_fetch_paste(param)
-        
+
        elif actn_req == 'test_connectivity':
            ret_val = self._handle_test_connectivity(param)
 
