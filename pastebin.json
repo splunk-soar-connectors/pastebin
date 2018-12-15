@@ -12,21 +12,14 @@
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "3.0.251",
+    "min_phantom_version": "4.0.1068",
     "logo": "pastebin.png",
     "configuration": {
-        "phantom_rest_api_host": {
-            "description": "Phantom Server IP/Hostname",
-            "data_type": "string",
-            "default": "127.0.0.1",
-            "required": true,
-            "order": 0
-        },
         "phantom_rest_api_token": {
             "description": "Phantom REST API token",
             "data_type": "password",
             "required": true,
-            "order": 1
+            "order": 0
         }
     },
     "actions": [
