@@ -56,7 +56,10 @@ class PasteBinConnector(BaseConnector):
 
         success = True
 
-        fname = Vault.get_vault_tmp_dir() + "/{}".format(file_name)
+        if hasattr(Vault, 'get_vault_tmp_dir'):
+            fname = Vault.get_vault_tmp_dir() + "/{}".format(file_name)
+        else:
+            fname = "/opt/phantom/vault/tmp/{0}".format(file_name)
 
         try:
             with open(fname, "w") as outfile:
