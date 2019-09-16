@@ -1,7 +1,7 @@
 {
     "appid": "4cf1ba95-2779-4d40-831a-1e47682ada5f",
     "name": "PasteBin",
-    "description": "This app supports investigate actions which allows text retrieval from PasteBin",
+    "description": "This app supports investigate actions which allow text retrieval from PasteBin",
     "publisher": "PingTrip",
     "package_name": "phantom_pastebin",
     "type": "information",
