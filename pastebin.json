@@ -1,19 +1,20 @@
 {
     "appid": "4cf1ba95-2779-4d40-831a-1e47682ada5f",
     "name": "PasteBin",
-    "description": "This app allows text retrieval from PasteBin",
+    "description": "This app supports investigate actions which allows text retrieval from PasteBin",
     "publisher": "PingTrip",
-    "package_name": "phantom_pingtrip_pastebin",
+    "package_name": "phantom_pastebin",
     "type": "information",
-    "license": "Copyright (c) Dave 'PingTrip' Crawford 2016-2017",
+    "license": "Copyright (c) Dave 'PingTrip' Crawford 2016-2019",
     "main_module": "pastebin_connector.pyc",
     "app_version": "1.5.4",
     "utctime_updated": "2017-11-30T22:46:12.000000Z",
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "4.0.1068",
-    "logo": "pastebin.png",
+    "min_phantom_version": "4.2.7532",
+    "logo": "logo_pastebin.svg",
+    "logo_dark": "logo_pastebin_dark.svg",
     "configuration": {
         "phantom_rest_api_token": {
             "description": "Phantom REST API token",
@@ -26,8 +27,7 @@
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using supplied configuration",
-            "verbose": "",
+            "description": "Validate the asset configuration for connectivity using the supplied configuration",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -48,7 +48,8 @@
                         "url"
                     ],
                     "primary": true,
-                    "required": true
+                    "required": true,
+                    "order": 0
                 }
             },
             "render": {
@@ -60,39 +61,7 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.data.*.pasteid",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.creation_time",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.title",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.author",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.keyword",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.contents",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.status",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.summary.SUMM",
                     "data_type": "string"
                 },
                 {
@@ -104,6 +73,38 @@
                     "example_values": [
                         "https://pastebin.com/caCMuQtT"
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.author",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.contents",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.creation_time",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.keyword",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.pasteid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.title",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.SUMM",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",
