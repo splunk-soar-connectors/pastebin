@@ -36,7 +36,7 @@ class PasteBinConnector(BaseConnector):
         phantom_base_url = self.get_phantom_base_url()
 
         try:
-            resp = requests.get(phantom_base_url + "/rest/container/{}".format(container_id), headers=headers, verify=False)
+            resp = requests.get("{0}rest/container/{1}".format(phantom_base_url, container_id), headers=headers, verify=False)
             cntnr_json = resp.json()
             keyword = cntnr_json['name'].split("keyword: ", 1)[1]
             return (keyword)
