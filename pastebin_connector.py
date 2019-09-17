@@ -8,6 +8,8 @@ from django.utils.encoding import smart_str
 from bs4 import BeautifulSoup
 from urlparse import urlparse
 from dateutil.parser import parse
+import os
+import uuid
 import pytz
 import requests
 # disable certificate warnings for self signed certificates
@@ -34,7 +36,7 @@ class PasteBinConnector(BaseConnector):
         phantom_base_url = self.get_phantom_base_url()
 
         try:
-            resp = requests.get(phantom_base_url + "/rest/container/{}".format(container_id), headers=headers, verify=False)
+            resp = requests.get("{0}rest/container/{1}".format(phantom_base_url, container_id), headers=headers, verify=False)
             cntnr_json = resp.json()
             keyword = cntnr_json['name'].split("keyword: ", 1)[1]
             return (keyword)
@@ -57,9 +59,13 @@ class PasteBinConnector(BaseConnector):
         success = True
 
         if hasattr(Vault, 'get_vault_tmp_dir'):
-            fname = Vault.get_vault_tmp_dir() + "/{}".format(file_name)
+            temp_dir = Vault.get_vault_tmp_dir()
         else:
-            fname = "/opt/phantom/vault/tmp/{0}".format(file_name)
+            temp_dir = "opt/phantom/vault/tmp"
+
+        temp_dir = temp_dir + '/{}'.format(uuid.uuid4())
+        os.makedirs(temp_dir)
+        fname = os.path.join(temp_dir, file_name)
 
         try:
             with open(fname, "w") as outfile:
@@ -81,7 +87,7 @@ class PasteBinConnector(BaseConnector):
         self.add_action_result(action_result)
 
         try:
-            self.save_progress("Fetching paste with id {0}".format(pasteid))
+            self.save_progress("Fetching paste with ID {0}".format(pasteid))
             results = requests.get("https://pastebin.com/{0}".format(pasteid), verify=True)
         except Exception as e:
             action_result.set_status(phantom.APP_ERROR, "Failed to download paste: ", e)
@@ -151,7 +157,6 @@ class PasteBinConnector(BaseConnector):
             action_result.set_status(phantom.APP_ERROR, "Test Connectivity Failed", e)
             return action_result.get_status()
 
-
     def handle_action(self, param):
        ret_val = phantom.APP_SUCCESS
        actn_req = self.get_action_identifier()
@@ -164,7 +169,6 @@ class PasteBinConnector(BaseConnector):
            ret_val = self._handle_test_connectivity(param)
 
        return ret_val
-       #return self.get_status()
 
 
 if __name__ == '__main__':
