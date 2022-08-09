@@ -92,18 +92,9 @@ a:visited {
   <td>{{ result.data.author }}</td>
 </tr>
 <tr>
-  <td><b>Keyword:</b></td>
-  <td>{{ result.data.keyword }}</td>
+  <td><b>Paste Data:</b></td>
+  <td>{{ result.data.paste_data }}</td>
 </tr>
-</table>
-
-<h3 class="nm-h4-style">Keyword Matches</h3>
-<table class="nm-table-horizontal">
-  <tr>
-    <td>
-      <textarea style="width: 300px; height: 200px; font-family:monospace;">{{ result.data.contents }}</textarea>
-    </td>
-  </tr>
 </table>
 
 {% endfor %} <!-- loop for each result end -->

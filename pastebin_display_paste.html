@@ -1,0 +1,103 @@
+{% extends 'widgets/widget_template.html' %}
+{% load custom_template %}
+
+{% block custom_title_prop %}{% if title_logo %}style="background-size: auto 60%; background-position: 50%; background-repeat: no-repeat; background-image: url('/app_resource/{{ title_logo }}');"{% endif %}{% endblock %}
+{% block title1 %}{{ title1 }}{% endblock %}
+{% block title2 %}{{ title2 }}{% endblock %}
+{% block custom_tools %}
+{% endblock %}
+
+{% block widget_content %} <!-- Main Start Block -->
+
+<style>
+
+a:link {
+  color: black;
+}
+
+a:hover {
+  text-decoration:underline;
+}
+
+a:visited {
+  color: black;
+}
+
+.nm-table-vertical {
+  width: initial;
+  font-size: 12px;
+}
+
+.nm-table-vertical td {
+  padding: 1px;
+  border: 0px solid rgb(234, 234, 234);
+}
+
+.nm-table-horizontal {
+  width: initial;
+  border: 0px solid rgb(234, 234, 234);
+  font-size: 12px;
+}
+
+.nm-table-horizontal th {
+  text-align: center;
+  border: 1px solid rgb(234, 234, 234);
+  text-transform: uppercase;
+  font-weight: normal;
+  color: rgb(108, 129, 139);
+  padding: 5px;
+}
+
+.nm-table-horizontal td {
+  border: 0px solid rgb(234, 234, 234);
+  padding: 5px;
+  padding-left: 1px;
+}
+
+.nm-h3-style {
+  font-size : 20px
+}
+
+.nm-h4-style {
+  font-size : 16px
+}
+
+.nm-h5-style {
+  font-size : 14px
+}
+.nm-subheader-style {
+  font-size : 12px
+}
+
+</style>
+<div style="overflow: auto; width: 100%; height: 100%; padding-left:10px; padding-right:10px"> <!-- Main Div -->
+  {% for result in results %}  <!--loop for each result -->
+  <h3 class="nm-h4-style">Paste Info</h3>
+
+  <table class="nm-table-vertical">
+    <tr>
+      <td><b>PasteID:</b></td>
+      <td>{{ result.data.pasteid }}</td>
+    </tr>
+    <tr>
+      <td><b>Date:</b></td>
+      <td>{{ result.data.creation_time }}</td>
+    </tr>
+    <tr>
+      <td><b>Title:</b></td>
+      <td>{{ result.data.title }}</td>
+    </tr>
+    <tr>
+      <td><b>Author:</b></td>
+      <td>{{ result.data.author }}</td>
+    </tr>
+    <tr>
+      <td><b>Paste data:</b></td>
+      <td>{{ result.data.paste_data }}</td>
+    </tr>
+  </table>
+
+  {% endfor %}  <!--loop for each result end -->
+</div> <!-- Main Div -->
+
+{% endblock %} <!-- Main Start Block -->

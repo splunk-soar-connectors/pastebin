@@ -1,4 +1,4 @@
-def _get_fetch_paste_result(result):
+def _get_data_result(result):
 
     ctx_result = {}
 #    param = result.get_param()
@@ -18,9 +18,9 @@ def display_paste(provides, all_app_runs, context):
 
     for summary, action_results in all_app_runs:
         for result in action_results:
-            fetch_paste_result = _get_fetch_paste_result(result)
-            if (fetch_paste_result is None):
+            get_data_result = _get_data_result(result)
+            if (get_data_result is None):
                 continue
-            results.append(fetch_paste_result)
+            results.append(get_data_result)
 
-    return 'display_paste.html'
+    return 'pastebin_display_paste.html'
