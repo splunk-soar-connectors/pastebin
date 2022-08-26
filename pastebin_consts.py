@@ -1,6 +1,6 @@
 # File: pastebin_consts.py
 #
-# Copyright (c) 2022 Splunk Inc.
+# Copyright (c) 2016-2022 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,27 +12,29 @@
 # the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
-
+#
+#
 # State file
 PASTEBIN_STATE_FILE_CORRUPT_ERR = (
     "Error occurred while loading the state file due to its unexpected format."
     "Resetting the state file with the default format. Please try again."
 )
 # Test Connectivity endpoints
-PASTEBIN_CONNECTION_MSG = 'Querying endpoint to verify the credentials provided'
-PASTEBIN_CONNECTIVITY_FAIL_MSG = 'Test connectivity failed'
-PASTEBIN_CONNECTIVITY_PASS_MSG = 'Test connectivity passed'
+PASTEBIN_CONNECTION_MSG = "Querying endpoint to verify the credentials provided"
+PASTEBIN_CONNECTIVITY_FAIL_MSG = "Test connectivity failed"
+PASTEBIN_CONNECTIVITY_PASS_MSG = "Test connectivity passed"
 DEFAULT_TIMEOUT_SECONDS = 30
 # Creating paste
 PASTEBIN_CREATING_PASTE_URL = "https://pastebin.com/api/api_post.php"
-PASTEBIN_CREATING_PASTE_PAYLOAD = "api_dev_key={}&api_paste_code={}&api_option={}&api_user_key={}&api_paste_name={}&api_paste_format={}&api_paste_private={}&api_paste_expire_date={}"
+PASTEBIN_CREATING_PASTE_PAYLOAD = "api_dev_key={}&api_paste_code={}&api_option={}"\
+    "&api_user_key={}&api_paste_name={}&api_paste_format={}&api_paste_private={}&api_paste_expire_date={}"
 # Get user key
-GET_USER_KEY_URL = 'https://pastebin.com/api/api_login.php'
+GET_USER_KEY_URL = "https://pastebin.com/api/api_login.php"
 PASTEBIN_GET_USER_KEY_PAYLOAD = "api_dev_key={}&api_user_name={}&api_user_password={}"
 # Error messages
-PASTEBIN_ERROR_MESSAGE = 'PASTEBIN_ERROR_MESSAGE'
-PASTEBIN_ERROR_CODE_MESSAGE = 'PASTEBIN_ERROR_CODE_MESSAGE'
-PASTEBIN_ERROR_MESSAGE_FORMAT = 'PASTEBIN_ERROR_MESSAGE_FORMAT{}{}'
+PASTEBIN_ERROR_MESSAGE = "Unknown error occurred. Please check the asset configuration and|or action parameters"
+PASTEBIN_ERROR_CODE_MESSAGE = "Error code unavailable"
+PASTEBIN_ERROR_MESSAGE_FORMAT = "Error code: {}. Error message: {}"
 # Dictionaries
 PASTEBIN_FORMAT_DICT = {
     '4CS': '4cs',

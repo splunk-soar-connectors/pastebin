@@ -1,6 +1,6 @@
 # File: pastebin_connector.py
 #
-# Copyright (c) 2022 Splunk Inc.
+# Copyright (c) 2016-2022 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,28 +12,30 @@
 # the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
-
+#
+#
 # Python 3 Compatibility imports
 from __future__ import print_function, unicode_literals
 
+import os
+import urllib.parse
+import uuid
+from urllib.parse import urlparse
+
 import phantom.app as phantom
 import phantom.rules as ph_rules
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-from phantom.vault import Vault
-import simplejson as json
-from pastebin_consts import *
-from django.utils.encoding import smart_str
-from bs4 import BeautifulSoup
-from urllib.parse import urlparse
-from dateutil.parser import parse
-import os
-import uuid
 import pytz
 import requests
-# import urllib3
-# urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-# disable certificate warnings for self signed certificates
+import simplejson as json
+from bs4 import BeautifulSoup
+from dateutil.parser import parse
+from django.utils.encoding import smart_str
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
+from phantom.vault import Vault
+
+from pastebin_consts import *
+
 requests.packages.urllib3.disable_warnings()
 
 
@@ -146,14 +148,6 @@ class PasteBinConnector(BaseConnector):
                 split_lines = error_text.split("\n")
                 split_lines = [x.strip() for x in split_lines if x.strip()]
                 error_message = "\n".join(split_lines)
-                # soup = BeautifulSoup(resp_txt, "html.parser")
-                # # Remove the script, style, footer and navigation part from the HTML message
-                # for element in soup(["script", "style", "footer", "nav"]):
-                #     element.extract()
-
-                # error_title = soup.find("title").string
-                # error_text = soup.find("div", class_="notice -no-margin").string
-                # error_message = "{}. {}".format(error_title, error_text)
             except Exception:
                 error_message = "Cannot parse error details"
 
@@ -235,8 +229,6 @@ class PasteBinConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         self.save_progress(PASTEBIN_CONNECTION_MSG)
 
-        # config = self.get_config()
-        # self._api_key = config['api_dev_key']
         api_paste_code = "Test connectivity checked"
 
         ret_val, _ = self._creating_paste(
@@ -313,17 +305,13 @@ class PasteBinConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return action_result.get_status(), None
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Paste created successfully"), response
+        return action_result.set_status(phantom.APP_SUCCESS, "Link obtained successfully"), response
 
     def _handle_create_paste(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         try:
-            api_paste_code = param['paste_text']
+            api_paste_code = urllib.parse.quote(param['paste_text'].encode('utf8'))
             api_option = 'paste'
-
-            # config = self.get_config()
-            # pastebin_username = config.get("pastebin_username", "")
-            # pastebin_password = config.get("pastebin_password", "")
 
             api_user_key = param.get("paste_as_user", False)
             api_paste_name = param.get("paste_title", "")
@@ -383,7 +371,7 @@ class PasteBinConnector(BaseConnector):
                 return action_result.get_status()
 
             action_result.add_data({"url": link})
-            return action_result.set_status(phantom.APP_SUCCESS, "Link obtained successfully")
+            return action_result.set_status(phantom.APP_SUCCESS, "Paste created successfully")
 
         except Exception as e:
             action_result.set_status(phantom.APP_ERROR, e)
@@ -392,9 +380,14 @@ class PasteBinConnector(BaseConnector):
     def _handle_get_data(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         container_id = self.get_container_id()
-        
+
         url = param['paste_url']
-        pasteid = urlparse(url).path.strip('/')
+        try:
+            pasteid = urlparse(url).path.strip('/')
+        except Exception as e:
+            error_msg = "Unable to get paste id from the URL. Please provide valid 'paste url' parameter. {0}".format(
+                self._get_error_message_from_exception(e))
+            return action_result.set_status(phantom.APP_ERROR, error_msg)
 
         try:
             self.save_progress("Fetching paste with ID {0}".format(pasteid))
@@ -415,7 +408,8 @@ class PasteBinConnector(BaseConnector):
                     'creation_time': "N/A",
                     'author': "N/A",
                     'title': "This page has been removed!",
-                    'paste_data': "This page is no longer available. It has either expired, been removed by its creator, or removed by one of the Pastebin staff."
+                    'paste_data': """This page is no longer available. It has either expired,
+ been removed by its creator, or removed by one of the Pastebin staff."""
                 })
             else:
                 paste_title = soup.find("div", class_="info-top").h1.string
@@ -482,6 +476,7 @@ class PasteBinConnector(BaseConnector):
 if __name__ == '__main__':
 
     import sys
+
     import pudb
     pudb.set_trace()
 
