@@ -15,138 +15,126 @@
 -->
 
 <html>
-
-<body>
-  <br>
-  <a href="/app_reference/pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f/img/get_data_details.png">
-    <img src="/app_reference/pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f/img/get_data_details.png" />
-  </a>
-  <br><br>
+  <body>
+    <br>
+    <a href="/app_reference/pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f/img/get_data_details.png">
+      <img src="/app_reference/pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f/img/get_data_details.png" />
+    </a>
+    <br><br>
   <h2>Port Details</h2>
   <p>
-    The app uses HTTP/ HTTPS protocol for communicating with the PasteBin server. Below are the default ports used by
-    the Splunk SOAR Connector.
-  <table>
-    <tr>
-      <th>SERVICE NAME</th>
-      <th>TRANSPORT PROTOCOL</th>
-      <th>PORT</th>
-    </tr>
-    <tr>
-      <td>http</td>
-      <td>tcp</td>
-      <td>80</td>
-    </tr>
-    <tr>
-      <td>https</td>
-      <td>tcp</td>
-      <td>443</td>
-    </tr>
-  </table>
+      The app uses HTTP/ HTTPS protocol for communicating with the PasteBin server. Below are the default ports used by the Splunk SOAR Connector.
+      <table>
+          <tr>
+              <th>SERVICE NAME</th>
+              <th>TRANSPORT PROTOCOL</th>
+              <th>PORT</th>
+          </tr>
+          <tr>
+              <td>http</td>
+              <td>tcp</td>
+              <td>80</td>
+          </tr>
+          <tr>
+              <td>https</td>
+              <td>tcp</td>
+              <td>443</td>
+          </tr>
+      </table>
   </p>
   <p>
-  <h2>Steps to Configure the PasteBin Splunk SOAR app's asset</h2>
-  <p>
-    Follow these steps to configure the PasteBin Splunk SOAR app's asset:
-  <ul>
-    <li>Log in to the PasteBin platform.</li>
+    <h2>Steps to Configure the PasteBin Splunk SOAR app's asset</h2>
+    <p>
+      Follow these steps to configure the PasteBin Splunk SOAR app's asset:
+      <ul>
+        <li>Log in to the PasteBin platform.</li>
+        <ul>
+          <li>Once logged in, select <b>API</b> by clicking it from the navigation bar.</li>
+          <li>In the Developers API section, click on <b>Your Unique Developer API Key</b>.</li>
+          <li>Copy the generated Developers API Key.</li>
+          <li>NOTE: The API key generated will always be available here whenever you logged in.</li>
+        </ul>
+        <li>Now, Log in to your Splunk SOAR instance.</li>
+        <ul>
+          <li>Navigate to the <b>Home</b> dropdown and select <b>Apps</b>.</li>
+          <li>Search the PasteBin App from the search box.</li>
+          <li>Click on the <b>CONFIGURE NEW ASSET</b> button.</li>
+          <li>Navigate to the <b>Asset Info</b> tab and enter the Asset name and Asset description.
+          </li>
+          <li>Navigate to the <b>Asset Settings</b>.</li>
+          <li>Paste the generated <b>API Key</b> from PasteBin UI to its respective configuration parameter.</li>
+          <li>Pastebin username and password are optional parameters. To create any paste as user, you need to provide credentials for the same.</li>
+          <li>Save the asset.</li>
+          <li>Now, test the connectivity of the Splunk SOAR server to the PasteBin instance by clicking the <b>TEST CONNECTIVITY</b> button.</li>
+        </ul>
+      </ul>
+
+    <h2>Explanation of the Asset Configuration Parameters</h2>
+    The asset configuration parameters affect 'test connectivity' and some other actions of the application. The parameters related to test connectivity action are API Key, Pastebin username, and Pastebin password.
     <ul>
-      <li>Once logged in, select <b>API</b> by clicking it from the navigation bar.</li>
-      <li>In the Developers API section, click on <b>Your Unique Developer API Key</b>.</li>
-      <li>Copy the generated Developers API Key.</li>
-      <li>NOTE: The API key generated will always be available here whenever you logged in.</li>
-    </ul>
-    <li>Now, Log in to your Splunk SOAR instance.</li>
-    <ul>
-      <li>Navigate to the <b>Home</b> dropdown and select <b>Apps</b>.</li>
-      <li>Search the PasteBin App from the search box.</li>
-      <li>Click on the <b>CONFIGURE NEW ASSET</b> button.</li>
-      <li>Navigate to the <b>Asset Info</b> tab and enter the Asset name and Asset description.
+      <li>
+        <b>Pastebin api dev key (Required): </b> API Token for asset authorization.
       </li>
-      <li>Navigate to the <b>Asset Settings</b>.</li>
-      <li>Paste the generated <b>API Key</b> from PasteBin UI to its respective configuration parameter.</li>
-      <li>Pastebin username and password are optional parameters. To create any paste as user, you need to provide
-        credentials for the same.</li>
-      <li>Save the asset.</li>
-      <li>Now, test the connectivity of the Splunk SOAR server to the PasteBin instance by clicking the <b>TEST
-          CONNECTIVITY</b> button.</li>
+      <li>
+        <b>Pastebin username (Optional): </b> The username of your PasteBin account.
+      </li>
+      <li>
+        <b>Pastebin password (Optional): </b> The password of your PasteBin account.
+      </li>
+      <li>NOTE: The developer API key, username, and password, all must belong to one particular account to create paste as a user. Whenever you log in, the generated API key will always be available <a href="https://pastebin.com/doc_api">here</a>.
+      </li>
     </ul>
-  </ul>
-
-  <h2>Explanation of the Asset Configuration Parameters</h2>
-  The asset configuration parameters affect 'test connectivity' and some other actions of the application. The
-  parameters related to test connectivity action are API Key and Number of minutes to poll for the converted file.
-  <ul>
-    <li>
-      <b>Pastebin api dev key (Required): </b> API Token for asset authorization.
-    </li>
-    <li>
-      <b>Pastebin username (Optional): </b> The username of your PasteBin account.
-    </li>
-    <li>
-      <b>Pastebin password (Optional): </b> The password of your PasteBin account.
-    </li>
-    <li>NOTE: The developer API key, username, and password, all must belong to one particular account to create paste
-      as user.</li>
-  </ul>
   </p>
   <p>
-  <h2>Explanation of the PasteBin Actions' Parameters</h2>
-  <ul>
-    <li>
-      <h3>Test Connectivity (Action Workflow Details)</h3>
-      <ul>
-        <li> This action will test the connectivity of the Splunk SOAR server to the PasteBin instance by making an
-          initial API call using the provided asset configuration parameters. </li>
-        <li> The action validates the provided asset configuration parameters. Based on the API call response, the
-          appropriate success and failure message will be displayed when the action gets executed.</li>
-      </ul>
-    </li>
+    <h2>Explanation of the PasteBin Actions' Parameters</h2>
+    <ul>
+      <li>
+        <h3>Test Connectivity (Action Workflow Details)</h3>
+        <ul>
+          <li> This action will test the connectivity of the Splunk SOAR server to the PasteBin instance by making an
+            initial API call using the provided asset configuration parameters. </li>
+          <li> The action validates the provided asset configuration parameters. Based on the API call response, the
+            appropriate success and failure message will be displayed when the action gets executed.</li>
+        </ul>
+      </li>
 
-    <li>
-      <h3>Get Data</h3>
-      To download, parse, and save a paste from PasteBin, the user can run this action. After a successful run of the
-      action, the text file will be generated with paste data and stored in the vault.
-      <ul>
-        <li><b>Action Parameter</b>: Pastebin url</li>
-        This is a required parameter. The user can enter any Pastebin URL to fetch its details. On running the action,
-        it generates a custom view listing paste details like author, created time, title, paste data, etc. Fetching
-        details for the 'Private as user' paste is not supported by this action.
-      </ul>
-    </li>
-    <li>
-      <h3>Create Paste</h3>
-      This action lets a user create a paste from pastebin.
-      <ul>
-        <li><b>Action Parameter: Paste text</b></li>
+      <li>
+        <h3>Get Data</h3>
+        To download, parse, and save a paste from PasteBin, the user can run this action. After a successful run of the action, the text file will be generated with paste data and stored in the vault.
         <ul>
-          <li>This is a required parameter. It is the text that will be written inside your paste.</li>
+          <li><b>Action Parameter</b>: Pastebin URL</li>
+          This is a required parameter. The user can enter any Pastebin URL to fetch its details. On running the action, it generates a custom view listing paste details like author, created time, title, paste data, etc. Fetching details for the 'Private as user' paste is not supported by this action.
         </ul>
-        <li><b>Action Parameter: Paste title</b></li>
+      </li>
+      <li>
+        <h3>Create Paste</h3>
+        This action lets a user create a paste from pastebin.
         <ul>
-          <li>This is an optional parameter. It will be the name/title of your paste.</li>
-        </ul>
-        <li><b>Action Parameter: Paste format</b></li>
-        <ul>
-          <li>This is an optional parameter. It will be the syntax highlighting value. This parameter supports more than
-            200 types of syntax highlighting options like Python, C, SQL, etc.</li>
-        </ul>
-        <li><b>Action Parameter: Paste exposure</b></li>
-        <ul>
-          <li>This is an optional parameter. It will set the exposure of a paste by making it a public, unlisted, or
-            private paste.</li>
-        </ul>
-        <li><b>Action Parameter: Paste expiration</b></li>
-        <ul>
-          <li>This is an optional parameter. It will set the expire date of any paste according to choice of user.</li>
-        </ul>
-        <li><b>Action Parameter: Paste as user</b></li>
-        <ul>
-          <li>This is an optional parameter. The paste will be pasted as 'User' (Pastebin username) if this parameter is
-            marked check, else it will be pasted as 'Guest'. Creating 'Private as user' paste is not supported by this
-            action.</li>
-        </ul>
-    </li>
-</body>
+          <li><b>Action Parameter: Paste text</b></li>
+          <ul>
+            <li>This is a required parameter. It is the text that will be written inside your paste.</li>
+          </ul>
+          <li><b>Action Parameter: Paste title</b></li>
+          <ul>
+            <li>This is an optional parameter. It will be the name/title of your paste.</li>
+          </ul>
+          <li><b>Action Parameter: Paste format</b></li>
+          <ul>
+            <li>This is an optional parameter. It will be the syntax highlighting value. This parameter supports more than 200 types of syntax highlighting options like Python, C, SQL, etc.</li>
+          </ul>
+          <li><b>Action Parameter: Paste exposure</b></li>
+          <ul>
+            <li>This is an optional parameter. It will set the exposure of a paste by making it a public, unlisted, or private paste.</li>
+          </ul>
+          <li><b>Action Parameter: Paste expiration</b></li>
+          <ul>
+            <li>This is an optional parameter. It will set the expiration date of any paste according to the choice of the user.</li>
+          </ul>
+          <li><b>Action Parameter: Paste as user</b></li>
+          <ul>
+            <li>This is an optional parameter. The paste will be pasted as 'User' (Pastebin username) if this parameter is marked check, else it will be pasted as 'Guest'. Creating a 'Private as user' paste is not supported by this action.</li>
+          </ul>
+      </li>
+  </body>
 
 </html>

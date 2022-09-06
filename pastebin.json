@@ -97,7 +97,7 @@
                     "data_path": "action_result.data.*.paste_data",
                     "data_type": "string",
                     "example_values": [
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et quam eget libero lobortis egestas quis non arcu. In a tincidunt nunc, sit amet mattis mauris. Aliquam luctus, dui ut ornare malesuada, mi ante porta odio, sed ultrices odio nisi nec velit. Quisque euismod massa vel varius semper. Quisque ac lorem nec dolor fermentum dapibus. Donec ultrices arcu quis laoreet blandit. Etiam eu faucibus erat, vel bibendum sapien. Nullam pretium justo in tortor aliquam, non ultricies diam pharetra. Nam aliquet dui lectus, eu placerat mi convallis quis. test alert trigger: pingtrip.com Sed eget accumsan enim. Quisque et diam aliquam, condimentum odio ultricies, eleifend lacus. Nunc id volutpat odio, nec aliquet tortor. Donec maximus dolor eget diam varius congue. In auctor tristique urna. Morbi a erat nec leo placerat convallis fermentum vehicula nunc. Quisque ac tempus justo. Aenean felis sapien, dignissim convallis molestie nec, tincidunt bibendum nisi. Maecenas semper non ligula eget molestie. Etiam efficitur hendrerit scelerisque. Mauris nec posuere lectus, at placerat mauris."
+                        "PasteBin text"
                     ]
                 },
                 {
@@ -489,9 +489,6 @@
                     "order": 5
                 }
             },
-            "render": {
-                "type": "table"
-            },
             "output": [
                 {
                     "data_path": "action_result.parameter.paste_text",
@@ -619,6 +616,13 @@
                     ]
                 }
             ],
+            "render": {
+                "type": "custom",
+                "width": 4,
+                "height": 1,
+                "view": "pastebin_view.display_paste",
+                "title": "Create Paste Details"
+            },
             "versions": "EQ(*)"
         }
     ],
