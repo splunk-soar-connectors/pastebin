@@ -1,7 +1,7 @@
 {
     "appid": "4cf1ba95-2779-4d40-831a-1e47682ada5f",
     "name": "PasteBin",
-    "description": "This app supports investigative actions which allow text retrieval from PasteBin",
+    "description": "This app integrates with PasteBin to perform investigative and generic actions",
     "publisher": "Splunk",
     "package_name": "phantom_pastebin",
     "type": "information",
@@ -169,7 +169,7 @@
             "description": "Create a paste from pastebin",
             "type": "generic",
             "identifier": "create_paste",
-            "read_only": true,
+            "read_only": false,
             "parameters": {
                 "paste_text": {
                     "description": "Pastebin text to paste",
@@ -493,8 +493,6 @@
                 {
                     "data_path": "action_result.parameter.paste_text",
                     "data_type": "string",
-                    "column_name": "Paste Text",
-                    "column_order": 1,
                     "example_values": [
                         "Pastebin text"
                     ]
@@ -538,8 +536,6 @@
                 {
                     "data_path": "action_result.data.*.url",
                     "data_type": "string",
-                    "column_name": "Obtained URL",
-                    "column_order": 0,
                     "contains": [
                         "url"
                     ],
@@ -702,11 +698,6 @@
             }
         ]
     },
-    "directory": "pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f",
-    "version": 1,
-    "appname": "-",
-    "executable": "spawn3",
-    "disabled": false,
     "pip39_dependencies": {
         "wheel": [
             {

@@ -308,13 +308,15 @@ class PasteBinConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, "Link obtained successfully"), response
 
     def _handle_create_paste(self, param):
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
+        self.save_progress("Fetching paste data")
         try:
             api_paste_code = urllib.parse.quote(param['paste_text'].encode('utf8'))
             api_option = 'paste'
 
             api_user_key = param.get("paste_as_user", False)
-            api_paste_name = param.get("paste_title", "")
+            api_paste_name = urllib.parse.quote(param.get("paste_title", "").encode('utf8'))
             api_paste_format = param.get("paste_format", "")
             api_paste_exposure = param.get("paste_exposure", "")
             api_paste_expiration = param.get("paste_expiration", "")
@@ -378,6 +380,7 @@ class PasteBinConnector(BaseConnector):
             return action_result.get_status()
 
     def _handle_get_data(self, param):
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
         container_id = self.get_container_id()
 
