@@ -310,7 +310,6 @@ class PasteBinConnector(BaseConnector):
     def _handle_create_paste(self, param):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
-        self.save_progress("Fetching paste data")
         try:
             api_paste_code = urllib.parse.quote(param['paste_text'].encode('utf8'))
             api_option = 'paste'
@@ -344,16 +343,31 @@ class PasteBinConnector(BaseConnector):
                 api_user_key = ""
 
             if api_paste_format:
+                if api_paste_format not in PASTEBIN_FORMAT_DICT:
+                    return action_result.set_status(
+                            phantom.APP_ERROR,
+                            "Please provide valid value for 'paste format' parameter"
+                        )
                 for key in PASTEBIN_FORMAT_DICT:
                     if api_paste_format == key:
                         api_paste_format = PASTEBIN_FORMAT_DICT[key]
 
             if api_paste_exposure:
+                if api_paste_exposure not in PASTEBIN_PRIVATE_DICT:
+                    return action_result.set_status(
+                            phantom.APP_ERROR,
+                            "Please provide valid value for 'paste exposure' parameter"
+                        )
                 for key in PASTEBIN_PRIVATE_DICT:
                     if api_paste_exposure == key:
                         api_paste_exposure = PASTEBIN_PRIVATE_DICT[key]
 
             if api_paste_expiration:
+                if api_paste_expiration not in PASTEBIN_EXPIRE_DATE_DICT:
+                    return action_result.set_status(
+                            phantom.APP_ERROR,
+                            "Please provide valid value for 'paste expiration' parameter"
+                        )
                 for key in PASTEBIN_EXPIRE_DATE_DICT:
                     if api_paste_expiration == key:
                         api_paste_expiration = PASTEBIN_EXPIRE_DATE_DICT[key]

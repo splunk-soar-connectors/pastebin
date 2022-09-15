@@ -17,8 +17,8 @@
 <html>
   <body>
     <br>
-    <a href="/app_reference/pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f/img/get_data_details.png">
-      <img src="/app_reference/pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f/img/get_data_details.png" />
+    <a href="/app_resource/pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f/img/get_data_details.png">
+      <img src="/app_resource/pastebin_4cf1ba95-2779-4d40-831a-1e47682ada5f/img/get_data_details.png" />
     </a>
     <br><br>
   <h2>Port Details</h2>
@@ -52,7 +52,7 @@
           <li>Once logged in, select <b>API</b> by clicking it from the navigation bar.</li>
           <li>In the Developers API section, click on <b>Your Unique Developer API Key</b>.</li>
           <li>Copy the generated Developers API Key.</li>
-          <li>NOTE: Whenever you log in, the generated API key will always be available <a href="https://pastebin.com/doc_api">here</a>.</li>
+          <li>NOTE: Whenever you log in, the generated API key will always be available <a href="https://pastebin.com/doc_api" target="_blank">here</a>.</li>
         </ul>
         <li>Now, Log in to your Splunk SOAR instance.</li>
         <ul>
@@ -104,6 +104,9 @@
         <ul>
           <li><b>Action Parameter</b>: Pastebin URL</li>
           This is a required parameter. The user can enter any Pastebin URL to fetch its details. On running the action, it generates a custom view listing paste details like author, created time, title, paste data, etc. Fetching details for the 'Private as user' paste is not supported by this action.
+          <br>
+          <li><b>NOTE:</b> While creating a paste from the PasteBin platform where we have set the paste format (syntax highlighting) in Bash, C, C#, C++, CSS, HTML, JSON, Java, JavaScript, Lua, Objective C, PHP, Perl, Python, Ruby, and Swift, file will be downloading the paste in 'paste_id.file_extension' format. For all the other syntax highlighting, the file will be downloaded in 'paste_id.txt' format. <br>While running the 'get_data' action, all the paste_format (syntax highlighting) which have been selected will be stored in the 'paste_id.txt' format
+          </li>
         </ul>
       </li>
       <li>

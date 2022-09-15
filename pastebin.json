@@ -12,7 +12,7 @@
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "5.3.0",
+    "min_phantom_version": "5.3.3",
     "app_wizard_version": "1.0.0",
     "python_version": "3",
     "logo": "logo_pastebin.svg",
@@ -77,6 +77,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.paste_url",
                     "data_type": "string",
                     "contains": [
@@ -94,17 +102,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.paste_data",
-                    "data_type": "string",
-                    "example_values": [
-                        "PasteBin text"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.creation_time",
                     "data_type": "string",
                     "example_values": [
                         "2016-12-30 18:57:49 UTC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.paste_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "PasteBin text"
                     ]
                 },
                 {
@@ -131,14 +139,6 @@
                 {
                     "data_path": "action_result.summary.SUMM",
                     "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -491,6 +491,43 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_as_user",
+                    "data_type": "boolean",
+                    "example_values": [
+                        "true",
+                        "false"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_expiration",
+                    "data_type": "string",
+                    "example_values": [
+                        "Never"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_exposure",
+                    "data_type": "string",
+                    "example_values": [
+                        "Public"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_format",
+                    "data_type": "string",
+                    "example_values": [
+                        "Python"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.paste_text",
                     "data_type": "string",
                     "example_values": [
@@ -505,53 +542,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.paste_format",
-                    "data_type": "string",
-                    "example_values": [
-                        "Python"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.paste_exposure",
-                    "data_type": "string",
-                    "example_values": [
-                        "Public"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.paste_expiration",
-                    "data_type": "string",
-                    "example_values": [
-                        "Never"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.paste_as_user",
-                    "data_type": "boolean",
-                    "example_values": [
-                        "true",
-                        "false"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.url",
-                    "data_type": "string",
-                    "contains": [
-                        "url"
-                    ],
-                    "example_values": [
-                        "https://pastebin.com/caCMuQtT"
-                    ]
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.author",
                     "data_type": "string",
                     "example_values": [
@@ -559,17 +549,17 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.paste_data",
-                    "data_type": "string",
-                    "example_values": [
-                        "Pastebin text"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.creation_time",
                     "data_type": "string",
                     "example_values": [
                         "2022-07-04 09:25:27 UTC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.paste_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "Pastebin text"
                     ]
                 },
                 {
@@ -584,6 +574,16 @@
                     "data_type": "string",
                     "example_values": [
                         "Pastebin title"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.url",
+                    "data_type": "string",
+                    "contains": [
+                        "url"
+                    ],
+                    "example_values": [
+                        "https://pastebin.com/caCMuQtT"
                     ]
                 },
                 {
@@ -642,7 +642,7 @@
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/py3/certifi-2022.6.15-py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2022.9.14-py3-none-any.whl"
             },
             {
                 "module": "chardet",
@@ -718,7 +718,7 @@
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/py3/certifi-2022.6.15-py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2022.9.14-py3-none-any.whl"
             },
             {
                 "module": "chardet",
