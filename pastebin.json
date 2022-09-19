@@ -18,7 +18,7 @@
     "logo": "logo_pastebin.svg",
     "logo_dark": "logo_pastebin_dark.svg",
     "latest_tested_version": [
-        "Cloud v3.0.1"
+        "Cloud v3.0.1, September 15, 2022"
     ],
     "fips_compliant": true,
     "configuration": {
@@ -629,10 +629,6 @@
                 "input_file": "wheels/py3/Django-3.2.15-py3-none-any.whl"
             },
             {
-                "module": "Pygments",
-                "input_file": "wheels/py3/Pygments-2.13.0-py3-none-any.whl"
-            },
-            {
                 "module": "asgiref",
                 "input_file": "wheels/py3/asgiref-3.4.1-py3-none-any.whl"
             },
@@ -651,10 +647,6 @@
             {
                 "module": "idna",
                 "input_file": "wheels/shared/idna-2.10-py2.py3-none-any.whl"
-            },
-            {
-                "module": "pudb",
-                "input_file": "wheels/py3/pudb-2019.2-py3-none-any.whl"
             },
             {
                 "module": "python_dateutil",
@@ -691,10 +683,6 @@
             {
                 "module": "urllib3",
                 "input_file": "wheels/shared/urllib3-1.26.12-py2.py3-none-any.whl"
-            },
-            {
-                "module": "urwid",
-                "input_file": "wheels/py36/urwid-2.1.2-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             }
         ]
     },
@@ -703,10 +691,6 @@
             {
                 "module": "Django",
                 "input_file": "wheels/py3/Django-3.2.15-py3-none-any.whl"
-            },
-            {
-                "module": "Pygments",
-                "input_file": "wheels/py3/Pygments-2.13.0-py3-none-any.whl"
             },
             {
                 "module": "asgiref",
@@ -727,10 +711,6 @@
             {
                 "module": "idna",
                 "input_file": "wheels/shared/idna-2.10-py2.py3-none-any.whl"
-            },
-            {
-                "module": "pudb",
-                "input_file": "wheels/py3/pudb-2019.2-py3-none-any.whl"
             },
             {
                 "module": "python_dateutil",
@@ -763,10 +743,6 @@
             {
                 "module": "urllib3",
                 "input_file": "wheels/shared/urllib3-1.26.12-py2.py3-none-any.whl"
-            },
-            {
-                "module": "urwid",
-                "input_file": "wheels/py39/urwid-2.1.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             }
         ]
     }

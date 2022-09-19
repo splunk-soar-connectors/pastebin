@@ -371,7 +371,7 @@ class PasteBinConnector(BaseConnector):
                 for key in PASTEBIN_EXPIRE_DATE_DICT:
                     if api_paste_expiration == key:
                         api_paste_expiration = PASTEBIN_EXPIRE_DATE_DICT[key]
-
+            self.debug_print("Creating paste...")
             ret_val, link = self._creating_paste(
                 action_result,
                 self._api_key,
