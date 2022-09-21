@@ -122,7 +122,7 @@ class PasteBinConnector(BaseConnector):
                     error_code = PASTEBIN_ERROR_CODE_MESSAGE
                     error_msg = e.args[0]
         except Exception as ex:
-            self.error_print("Error occurred while retrieving exception information: ", e)
+            self.error_print("Error occurred while retrieving exception information: ", ex)
 
         if not error_code:
             error_text = "Error Message: {}".format(error_msg)
