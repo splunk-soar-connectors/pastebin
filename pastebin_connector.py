@@ -16,9 +16,9 @@
 #
 # Python 3 Compatibility imports
 import os
+import traceback
 import urllib.parse
 import uuid
-import traceback
 from urllib.parse import urlparse
 
 import phantom.app as phantom
