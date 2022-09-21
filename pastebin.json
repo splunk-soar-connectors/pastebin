@@ -23,18 +23,18 @@
     "fips_compliant": true,
     "configuration": {
         "api_dev_key": {
-            "description": "Pastebin api dev key",
+            "description": "API dev key",
             "data_type": "password",
             "required": true,
             "order": 0
         },
         "pastebin_username": {
-            "description": "Pastebin username",
+            "description": "Username",
             "data_type": "string",
             "order": 1
         },
         "pastebin_password": {
-            "description": "Pastebin password",
+            "description": "Password",
             "data_type": "password",
             "order": 2
         }
@@ -58,7 +58,7 @@
             "read_only": true,
             "parameters": {
                 "paste_url": {
-                    "description": "Pastebin url to fetch the data",
+                    "description": "PasteBin URL to fetch the data",
                     "data_type": "string",
                     "contains": [
                         "url"
@@ -137,7 +137,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.SUMM",
+                    "data_path": "action_result.summary",
                     "data_type": "string"
                 },
                 {
@@ -166,24 +166,24 @@
         },
         {
             "action": "create paste",
-            "description": "Create a paste from pastebin",
+            "description": "Create a paste from PasteBin",
             "type": "generic",
             "identifier": "create_paste",
             "read_only": false,
             "parameters": {
                 "paste_text": {
-                    "description": "Pastebin text to paste",
+                    "description": "PasteBin text to paste",
                     "data_type": "string",
                     "required": true,
                     "order": 0
                 },
                 "paste_title": {
-                    "description": "Pastebin title to paste",
+                    "description": "PasteBin title to paste",
                     "data_type": "string",
                     "order": 1
                 },
                 "paste_format": {
-                    "description": "Pastebin format to paste",
+                    "description": "PasteBin format to paste",
                     "data_type": "string",
                     "value_list": [
                         "4CS",
@@ -456,7 +456,7 @@
                     "order": 2
                 },
                 "paste_exposure": {
-                    "description": "Pastebin paste to be marked as public, private, or unlisted",
+                    "description": "PasteBin paste to be marked as public, private, or unlisted",
                     "data_type": "string",
                     "value_list": [
                         "Public",
@@ -467,7 +467,7 @@
                     "order": 3
                 },
                 "paste_expiration": {
-                    "description": "Pastebin paste expiration time",
+                    "description": "PasteBin paste expiration time",
                     "data_type": "string",
                     "value_list": [
                         "Never",
@@ -502,8 +502,8 @@
                     "data_path": "action_result.parameter.paste_as_user",
                     "data_type": "boolean",
                     "example_values": [
-                        "true",
-                        "false"
+                        true,
+                        false
                     ]
                 },
                 {
@@ -531,14 +531,14 @@
                     "data_path": "action_result.parameter.paste_text",
                     "data_type": "string",
                     "example_values": [
-                        "Pastebin text"
+                        "PasteBin text"
                     ]
                 },
                 {
                     "data_path": "action_result.parameter.paste_title",
                     "data_type": "string",
                     "example_values": [
-                        "Pastebin title"
+                        "PasteBin title"
                     ]
                 },
                 {
@@ -559,7 +559,7 @@
                     "data_path": "action_result.data.*.paste_data",
                     "data_type": "string",
                     "example_values": [
-                        "Pastebin text"
+                        "PasteBin text"
                     ]
                 },
                 {
@@ -573,7 +573,7 @@
                     "data_path": "action_result.data.*.title",
                     "data_type": "string",
                     "example_values": [
-                        "Pastebin title"
+                        "PasteBin title"
                     ]
                 },
                 {
@@ -587,7 +587,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.SUMM",
+                    "data_path": "action_result.summary",
                     "data_type": "string"
                 },
                 {

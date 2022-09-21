@@ -40,29 +40,28 @@
 }
 
 .pastebin .nm-table-vertical td {
-  padding: 1px;
-  border: 0px solid rgb(234, 234, 234);
+  padding: 8px 10px;
+  border: 1px solid;
 }
 
 .pastebin .nm-table-horizontal {
-  width: initial;
-  border: 0px solid rgb(234, 234, 234);
+  border: 1px solid;
   font-size: 12px;
 }
 
 .pastebin .nm-table-horizontal th {
   text-align: center;
-  border: 1px solid rgb(234, 234, 234);
+  border: 1px solid;
   text-transform: uppercase;
   font-weight: normal;
-  color: rgb(108, 129, 139);
   padding: 5px;
 }
 
 .pastebin .nm-table-horizontal td {
-  border: 0px solid rgb(234, 234, 234);
+  border: 1px solid;
   padding: 5px;
-  padding-left: 1px;
+  padding-left: 4px;
+  text-align: center;
 }
 
 .pastebin .nm-h3-style {
@@ -90,27 +89,23 @@
   {% else %}
   <h3 class="nm-h4-style">Paste Info</h3>
 
-  <table class="nm-table-vertical">
-    <tr>
-      <td><b>PasteID:</b></td>
+  <table class="nm-table-horizontal" width="100%">
+    <thead>
+      <tr>
+        <th>Paste ID</th>
+        <th>Date</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Paste data</th>
+      </tr>
+    </thead>
+    <tbody>
       <td>{{ result.data.pasteid }}</td>
-    </tr>
-    <tr>
-      <td><b>Date:</b></td>
       <td>{{ result.data.creation_time }}</td>
-    </tr>
-    <tr>
-      <td><b>Title:</b></td>
       <td>{{ result.data.title }}</td>
-    </tr>
-    <tr>
-      <td><b>Author:</b></td>
       <td>{{ result.data.author }}</td>
-    </tr>
-    <tr>
-      <td><b>Paste data:</b></td>
       <td>{{ result.data.paste_data }}</td>
-    </tr>
+    </tbody>
   </table>
   {% endif %}
   {% endfor %}  <!--loop for each result end -->

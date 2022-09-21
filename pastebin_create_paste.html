@@ -40,29 +40,28 @@
 }
 
 .pastebin .nm-table-vertical td {
-  padding: 1px;
-  border: 0px solid rgb(234, 234, 234);
+  padding: 8px 10px;
+  border: 1px solid;
 }
 
 .pastebin .nm-table-horizontal {
-  width: initial;
-  border: 0px solid rgb(234, 234, 234);
+  border: 1px solid;
   font-size: 12px;
 }
 
 .pastebin .nm-table-horizontal th {
   text-align: center;
-  border: 1px solid rgb(234, 234, 234);
+  border: 1px solid;
   text-transform: uppercase;
   font-weight: normal;
-  color: rgb(108, 129, 139);
   padding: 5px;
 }
 
 .pastebin .nm-table-horizontal td {
-  border: 0px solid rgb(234, 234, 234);
+  border: 1px solid;
   padding: 5px;
-  padding-left: 1px;
+  padding-left: 4px;
+  text-align: center;
 }
 
 .pastebin .nm-h3-style {
@@ -88,11 +87,17 @@
   {% if not result.data %}
   <h4 class="nm-h4-style">No data found</h4>
   {% else %}
-  <h3 class="nm-h4-style">Create Paste Details</h3>
+  <h3 class="nm-h4-style">Created Paste Details</h3>
 
-  <table class="nm-table-vertical">
-    <tr>
-        <td><b>Paste URL:</b></td>
+  <table class="nm-table-horizontal" width="100%">
+    <thead>
+      <tr>
+        <th>Paste URL</th>
+        <th>Paste text</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
         <td>
           <a href="javascript:;"
               onclick="context_menu(this, [{'contains': ['url'], 'value': '{{ result.data.url }}' }], 0, {{ container.id }}, null, false);">
@@ -101,11 +106,9 @@
               <span class="fa fa-caret-down" style="font-size: smaller;"></span>
           </a>
         </td>
+        <td>{{ result.param.paste_text }}</td>
       </tr>
-    <tr>
-      <td><b>Paste text:</b></td>
-      <td>{{ result.param.paste_text }}</td>
-    </tr>
+    </tbody>
   </table>
   {% endif %}
   {% endfor %}  <!--loop for each result end -->

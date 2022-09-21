@@ -15,11 +15,10 @@
 #
 #
 # Python 3 Compatibility imports
-from __future__ import print_function, unicode_literals
-
 import os
 import urllib.parse
 import uuid
+import traceback
 from urllib.parse import urlparse
 
 import phantom.app as phantom
@@ -112,6 +111,8 @@ class PasteBinConnector(BaseConnector):
         """
         error_msg = PASTEBIN_ERROR_MESSAGE
         error_code = PASTEBIN_ERROR_CODE_MESSAGE
+        self.error_print("Traceback: {}".format(traceback.format_stack()))
+
         try:
             if hasattr(e, "args"):
                 if len(e.args) > 1:
@@ -121,8 +122,7 @@ class PasteBinConnector(BaseConnector):
                     error_code = PASTEBIN_ERROR_CODE_MESSAGE
                     error_msg = e.args[0]
         except Exception as ex:
-            self.debug_print("Exception: {}".format(ex))
-            pass
+            self.error_print("Error occurred while retrieving exception information: ", e)
 
         if not error_code:
             error_text = "Error Message: {}".format(error_msg)
@@ -193,16 +193,7 @@ class PasteBinConnector(BaseConnector):
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
-    def _make_rest_call(
-        self,
-        url,
-        action_result,
-        headers=None,
-        timeout=60,
-        data=None,
-        method="get",
-        **kwargs
-    ):
+    def _make_rest_call(self, url, action_result, headers=None, timeout=60, data=None, method="get", **kwargs):
 
         resp_json = None
         try:
@@ -433,7 +424,7 @@ class PasteBinConnector(BaseConnector):
                 paste_author = soup.find("div", class_="username").a.string if soup.find("div", class_="username").a else 'Guest'
                 paste_time = soup.find("div", class_="date").span['title']
                 paste_time = self._convert_to_client_tz(paste_time)
-                paste_data = soup.find("textarea", class_="textarea -raw js-paste-raw").string
+                paste_data = soup.find("div", class_="de1").string
 
                 action_result.add_data({
                     'pasteid': pasteid,
@@ -499,7 +490,7 @@ if __name__ == '__main__':
 
     if (len(sys.argv) < 2):
         print("No test json specified as input")
-        exit(0)
+        sys.exit(0)
 
     with open(sys.argv[1]) as f:
         in_json = f.read()
@@ -511,4 +502,4 @@ if __name__ == '__main__':
         ret_val = connector._handle_action(json.dumps(in_json), None)
         print(json.dumps(json.loads(ret_val), indent=4))
 
-    exit(0)
+    sys.exit(0)
