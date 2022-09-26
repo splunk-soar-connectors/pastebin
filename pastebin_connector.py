@@ -131,6 +131,20 @@ class PasteBinConnector(BaseConnector):
 
         return error_text
 
+    def _process_text_response(self, response, action_result):
+        resp_txt = response.text
+        status_code = response.status_code
+
+        if 200 <= response.status_code < 399:
+            return RetVal(phantom.APP_SUCCESS, resp_txt)
+
+        message = "Status Code: {0}. Data from server:\n{1}\n".format(
+            status_code, resp_txt
+        )
+
+        message = message.replace("{", "{{").replace("}", "}}")
+        return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
+
     def _process_html_response(self, response, action_result):
         resp_txt = response.text
         status_code = response.status_code
@@ -183,6 +197,9 @@ class PasteBinConnector(BaseConnector):
 
         if "html" in r.headers.get("Content-Type", ""):
             return self._process_html_response(r, action_result)
+
+        if "plain" in r.headers.get("Content-Type", ""):
+            return self._process_text_response(r, action_result)
 
         if not r.text:
             return self._process_empty_response(r, action_result)
@@ -384,6 +401,20 @@ class PasteBinConnector(BaseConnector):
             action_result.set_status(phantom.APP_ERROR, e)
             return action_result.get_status()
 
+    def _get_paste_data(self, action_result, pasteid):
+        url = (GET_PASTE_DATA_URL).format(pasteid)
+
+        ret_val, response = self._make_rest_call(
+            url=url,
+            action_result=action_result,
+            timeout=30,
+            method="get"
+        )
+        if phantom.is_fail(ret_val):
+            return action_result.get_status(), None
+
+        return action_result.set_status(phantom.APP_SUCCESS, "Paste data obtained successfully"), response
+
     def _handle_get_data(self, param):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -424,7 +455,9 @@ class PasteBinConnector(BaseConnector):
                 paste_author = soup.find("div", class_="username").a.string if soup.find("div", class_="username").a else 'Guest'
                 paste_time = soup.find("div", class_="date").span['title']
                 paste_time = self._convert_to_client_tz(paste_time)
-                paste_data = soup.find("div", class_="de1").string
+                ret_val, paste_data = self._get_paste_data(action_result, pasteid)
+                if phantom.is_fail(ret_val):
+                    return action_result.get_status()
 
                 action_result.add_data({
                     'pasteid': pasteid,

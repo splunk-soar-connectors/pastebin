@@ -26,6 +26,13 @@
 
 <style>
 
+.output {
+  background-color: black;
+  color: beige;
+  margin: 10px;
+  padding: 10px;
+}
+
 .pastebin a:hover {
   text-decoration:underline;
 }
@@ -47,10 +54,10 @@
 .pastebin .nm-table-horizontal {
   border: 1px solid;
   font-size: 12px;
+  text-align: left;
 }
 
 .pastebin .nm-table-horizontal th {
-  text-align: center;
   border: 1px solid;
   text-transform: uppercase;
   font-weight: normal;
@@ -61,7 +68,6 @@
   border: 1px solid;
   padding: 5px;
   padding-left: 4px;
-  text-align: center;
 }
 
 .pastebin .nm-h3-style {
@@ -96,15 +102,24 @@
         <th>Date</th>
         <th>Title</th>
         <th>Author</th>
-        <th>Paste data</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody style="vertical-align: top">
       <td>{{ result.data.pasteid }}</td>
       <td>{{ result.data.creation_time }}</td>
       <td>{{ result.data.title }}</td>
       <td>{{ result.data.author }}</td>
-      <td>{{ result.data.paste_data }}</td>
+    </tbody>
+  </table>
+  <br>
+  <table class="nm-table-horizontal" width="100%">
+    <thead>
+      <tr>
+        <th>Paste data</th>
+      </tr>
+    </thead>
+    <tbody style="vertical-align: top">
+      <td><pre class="output">{{ result.data.paste_data }}</pre></td>
     </tbody>
   </table>
   {% endif %}

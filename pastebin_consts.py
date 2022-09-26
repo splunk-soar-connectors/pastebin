@@ -31,6 +31,8 @@ PASTEBIN_CREATING_PASTE_PAYLOAD = "api_dev_key={}&api_paste_code={}&api_option={
 # Get user key
 GET_USER_KEY_URL = "https://pastebin.com/api/api_login.php"
 PASTEBIN_GET_USER_KEY_PAYLOAD = "api_dev_key={}&api_user_name={}&api_user_password={}"
+# Get paste data
+GET_PASTE_DATA_URL = "https://pastebin.com/raw/{}"
 # Error messages
 PASTEBIN_ERROR_MESSAGE = "Unknown error occurred. Please check the asset configuration and|or action parameters"
 PASTEBIN_ERROR_CODE_MESSAGE = "Error code unavailable"

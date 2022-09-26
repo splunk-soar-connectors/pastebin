@@ -17,12 +17,10 @@
 def _get_data_result(result):
 
     ctx_result = {}
-    param = result.get_param()
     data = result.get_data()
     status = result.get_status()
 
     ctx_result['status'] = status
-    ctx_result['param'] = param
     if (data):
         ctx_result['data'] = data[0]
 
@@ -42,6 +40,3 @@ def display_paste(provides, all_app_runs, context):
 
     if provides == 'get data':
         return 'pastebin_display_paste.html'
-
-    if provides == 'create paste':
-        return 'pastebin_create_paste.html'
