@@ -60,15 +60,9 @@ class PasteBinConnector(BaseConnector):
         # TODO: Next version will have a configurable TZ
         t = parse(t_str, tzinfos={"CDT": -18000, "CST": -21600})
         client_tz = pytz.UTC
-
-        # try:
-        #    client_tz = pytz.timezone("EST5EDT")
-        # except:
-        #    client_tz = pytz.UTC
         return t.astimezone(pytz.timezone(client_tz.zone)).strftime("%Y-%m-%d %H:%M:%S %Z")
 
     def _add_file_to_vault(self, action_result, file_name, container_id, file_data):
-        # action_result = ActionResult(dict(param))
         success = True
 
         if hasattr(Vault, 'get_vault_tmp_dir'):
@@ -87,8 +81,7 @@ class PasteBinConnector(BaseConnector):
             success = False
 
         if success:
-            # Vault.add_attachment(fname, container_id, file_name=None, metadata=dict())
-            # Save attachment file to the vault\
+            # Save attachment file to the vault
             try:
                 success, message, attachment_vault_id = ph_rules.vault_add(
                     container=container_id,
