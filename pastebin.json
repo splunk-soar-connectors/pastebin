@@ -1,26 +1,42 @@
 {
     "appid": "4cf1ba95-2779-4d40-831a-1e47682ada5f",
     "name": "PasteBin",
-    "description": "This app supports investigative actions which allow text retrieval from PasteBin",
-    "publisher": "PingTrip",
+    "description": "This app integrates with PasteBin to perform investigative and generic actions",
+    "publisher": "Splunk",
     "package_name": "phantom_pastebin",
     "type": "information",
-    "license": "Copyright (c) Dave 'PingTrip' Crawford 2016-2019",
-    "main_module": "pastebin_connector.pyc",
-    "app_version": "1.5.6",
+    "license": "Copyright (c) 2019-2022 Splunk Inc.",
+    "main_module": "pastebin_connector.py",
+    "app_version": "2.0.0",
     "utctime_updated": "2022-01-07T21:29:06.000000Z",
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "4.2.7532",
+    "min_phantom_version": "5.3.3",
+    "app_wizard_version": "1.0.0",
+    "python_version": "3",
     "logo": "logo_pastebin.svg",
     "logo_dark": "logo_pastebin_dark.svg",
+    "latest_tested_version": [
+        "Cloud v3.0.1, September 15, 2022"
+    ],
+    "fips_compliant": true,
     "configuration": {
-        "phantom_rest_api_token": {
-            "description": "Phantom REST API token",
+        "api_dev_key": {
+            "description": "API dev key",
             "data_type": "password",
             "required": true,
             "order": 0
+        },
+        "pastebin_username": {
+            "description": "Username",
+            "data_type": "string",
+            "order": 1
+        },
+        "pastebin_password": {
+            "description": "Password",
+            "data_type": "password",
+            "order": 2
         }
     },
     "actions": [
@@ -36,13 +52,13 @@
         },
         {
             "action": "get data",
-            "description": "Download, parse and save a paste from PasteBin",
+            "description": "Download, parse, and save a paste from PasteBin",
             "type": "investigate",
             "identifier": "get_data",
             "read_only": true,
             "parameters": {
                 "paste_url": {
-                    "description": "PasteBin URL to fetch",
+                    "description": "PasteBin URL to fetch the data",
                     "data_type": "string",
                     "contains": [
                         "url"
@@ -62,7 +78,11 @@
             "output": [
                 {
                     "data_path": "action_result.status",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.paste_url",
@@ -76,45 +96,527 @@
                 },
                 {
                     "data_path": "action_result.data.*.author",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.contents",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "Guest"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.creation_time",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "2016-12-30 18:57:49 UTC"
+                    ]
                 },
                 {
-                    "data_path": "action_result.data.*.keyword",
-                    "data_type": "string"
+                    "data_path": "action_result.data.*.paste_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "PasteBin text"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.pasteid",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "caCMuQtT"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.title",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "Phantom Test Paste"
+                    ]
                 },
                 {
-                    "data_path": "action_result.summary.SUMM",
+                    "data_path": "action_result.data.*.vault_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "8f34774262c4bcda0b2161f0ba34af8e80aa1bd9"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
                     "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "File added successfully to vault"
+                    ]
                 },
                 {
                     "data_path": "summary.total_objects",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
                 },
                 {
                     "data_path": "summary.total_objects_successful",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
                 }
             ],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "create paste",
+            "description": "Create a paste from PasteBin",
+            "type": "generic",
+            "identifier": "create_paste",
+            "read_only": false,
+            "parameters": {
+                "paste_text": {
+                    "description": "PasteBin text to paste",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 0
+                },
+                "paste_title": {
+                    "description": "PasteBin title to paste",
+                    "data_type": "string",
+                    "order": 1
+                },
+                "paste_format": {
+                    "description": "PasteBin format to paste",
+                    "data_type": "string",
+                    "value_list": [
+                        "4CS",
+                        "6502 ACME Cross Assembler",
+                        "6502 Kick Assembler",
+                        "6502 TASM/64TASS",
+                        "ABAP",
+                        "ActionScript",
+                        "ActionScript 3",
+                        "Ada",
+                        "AIMMS",
+                        "ALGOL 68",
+                        "Apache Log",
+                        "AppleScript",
+                        "APT Sources",
+                        "Arduino",
+                        "ARM",
+                        "ASM (NASM)",
+                        "ASP",
+                        "Asymptote",
+                        "autoconf",
+                        "Autohotkey",
+                        "AutoIt",
+                        "Avisynth",
+                        "Awk",
+                        "BASCOM AVR",
+                        "Bash",
+                        "Basic4GL",
+                        "Batch",
+                        "BibTeX",
+                        "Blitz3D",
+                        "Blitz Basic",
+                        "BlitzMax",
+                        "BNF",
+                        "BOO",
+                        "BrainFuck",
+                        "C",
+                        "C#",
+                        "C (WinAPI)",
+                        "C++",
+                        "C++ (WinAPI)",
+                        "C++ (with Qt extensions)",
+                        "C: Loadrunner",
+                        "CAD DCL",
+                        "CAD Lisp",
+                        "Ceylon",
+                        "CFDG",
+                        "C for Macs",
+                        "ChaiScript",
+                        "Chapel",
+                        "C Intermediate Language",
+                        "Clojure",
+                        "Clone C",
+                        "Clone C++",
+                        "CMake",
+                        "COBOL",
+                        "CoffeeScript",
+                        "ColdFusion",
+                        "CSS",
+                        "Cuesheet",
+                        "D",
+                        "Dart",
+                        "DCL",
+                        "DCPU-16",
+                        "DCS",
+                        "Delphi",
+                        "Delphi Prism (Oxygene)",
+                        "Diff",
+                        "DIV",
+                        "DOT",
+                        "E",
+                        "Easytrieve",
+                        "ECMAScript",
+                        "Eiffel",
+                        "Email",
+                        "EPC",
+                        "Erlang",
+                        "Euphoria",
+                        "F#",
+                        "Falcon",
+                        "Filemaker",
+                        "FO Language",
+                        "Formula One",
+                        "Fortran",
+                        "FreeBasic",
+                        "FreeSWITCH",
+                        "GAMBAS",
+                        "Game Maker",
+                        "GDB",
+                        "GDScript",
+                        "Genero",
+                        "Genie",
+                        "GetText",
+                        "Go",
+                        "Godot GLSL",
+                        "Groovy",
+                        "GwBasic",
+                        "Haskell",
+                        "Haxe",
+                        "HicEst",
+                        "HQ9 Plus",
+                        "HTML",
+                        "HTML 5",
+                        "Icon",
+                        "IDL",
+                        "INI file",
+                        "Inno Script",
+                        "INTERCAL",
+                        "IO",
+                        "ISPF Panel Definition",
+                        "J",
+                        "Java",
+                        "Java 5",
+                        "JavaScript",
+                        "JCL",
+                        "jQuery",
+                        "JSON",
+                        "Julia",
+                        "KiXtart",
+                        "Kotlin",
+                        "KSP (Kontakt Script)",
+                        "Latex",
+                        "LDIF",
+                        "Liberty BASIC",
+                        "Linden Scripting",
+                        "Lisp",
+                        "LLVM",
+                        "Loco Basic",
+                        "Logtalk",
+                        "LOL Code",
+                        "Lotus Formulas",
+                        "Lotus Script",
+                        "LScript",
+                        "Lua",
+                        "M68000 Assembler",
+                        "MagikSF",
+                        "Make",
+                        "MapBasic",
+                        "Markdown",
+                        "MatLab",
+                        "Mercury",
+                        "MetaPost",
+                        "mIRC",
+                        "MIX Assembler",
+                        "MK-61/52",
+                        "Modula 2",
+                        "Modula 3",
+                        "Motorola 68000 HiSoft Dev",
+                        "MPASM",
+                        "MXML",
+                        "MySQL",
+                        "Nagios",
+                        "NetRexx",
+                        "newLISP",
+                        "Nginx",
+                        "Nim",
+                        "NullSoft Installer",
+                        "Oberon 2",
+                        "Objeck Programming Langua",
+                        "Objective C",
+                        "OCaml",
+                        "OCaml Brief",
+                        "Octave",
+                        "OpenBSD PACKET FILTER",
+                        "OpenGL Shading",
+                        "Open Object Rexx",
+                        "Openoffice BASIC",
+                        "Oracle 8",
+                        "Oracle 11",
+                        "Oz",
+                        "ParaSail",
+                        "PARI/GP",
+                        "Pascal",
+                        "Pawn",
+                        "PCRE",
+                        "Per",
+                        "Perl",
+                        "Perl 6",
+                        "Phix",
+                        "PHP",
+                        "PHP Brief",
+                        "Pic 16",
+                        "Pike",
+                        "Pixel Bender",
+                        "PL/I",
+                        "PL/SQL",
+                        "PostgreSQL",
+                        "PostScript",
+                        "POV-Ray",
+                        "PowerBuilder",
+                        "PowerShell",
+                        "ProFTPd",
+                        "Progress",
+                        "Prolog",
+                        "Properties",
+                        "ProvideX",
+                        "Puppet",
+                        "PureBasic",
+                        "PyCon",
+                        "Python",
+                        "Python for S60",
+                        "q/kdb+",
+                        "QBasic",
+                        "QML",
+                        "R",
+                        "Racket",
+                        "Rails",
+                        "RBScript",
+                        "REBOL",
+                        "REG",
+                        "Rexx",
+                        "Robots",
+                        "Roff Manpage",
+                        "RPM Spec",
+                        "Ruby",
+                        "Ruby Gnuplot",
+                        "Rust",
+                        "SAS",
+                        "Scala",
+                        "Scheme",
+                        "Scilab",
+                        "SCL",
+                        "SdlBasic",
+                        "Smalltalk",
+                        "Smarty",
+                        "SPARK",
+                        "SPARQL",
+                        "SQF",
+                        "SQL",
+                        "SSH Config",
+                        "StandardML",
+                        "StoneScript",
+                        "SuperCollider",
+                        "Swift",
+                        "SystemVerilog",
+                        "T-SQL",
+                        "TCL",
+                        "Tera Term",
+                        "TeXgraph",
+                        "thinBasic",
+                        "TypeScript",
+                        "TypoScript",
+                        "Unicon",
+                        "UnrealScript",
+                        "UPC",
+                        "Urbi",
+                        "Vala",
+                        "VB.NET",
+                        "VBScript",
+                        "Vedit",
+                        "VeriLog",
+                        "VHDL",
+                        "VIM",
+                        "VisualBasic",
+                        "VisualFoxPro",
+                        "Visual Pro Log",
+                        "WhiteSpace",
+                        "WHOIS",
+                        "Winbatch",
+                        "XBasic",
+                        "XML",
+                        "Xojo",
+                        "Xorg Config",
+                        "XPP",
+                        "YAML",
+                        "YARA",
+                        "Z80 Assembler",
+                        "ZXBasic"
+                    ],
+                    "order": 2
+                },
+                "paste_exposure": {
+                    "description": "PasteBin paste to be marked as public, private, or unlisted",
+                    "data_type": "string",
+                    "value_list": [
+                        "Public",
+                        "Unlisted",
+                        "Private"
+                    ],
+                    "default": "Public",
+                    "order": 3
+                },
+                "paste_expiration": {
+                    "description": "PasteBin paste expiration time",
+                    "data_type": "string",
+                    "value_list": [
+                        "Never",
+                        "10 Minutes",
+                        "1 Hour",
+                        "1 Day",
+                        "1 Week",
+                        "2 Weeks",
+                        "1 Month",
+                        "6 Months",
+                        "1 Year"
+                    ],
+                    "default": "Never",
+                    "order": 4
+                },
+                "paste_as_user": {
+                    "description": "Paste as user",
+                    "data_type": "boolean",
+                    "order": 5
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_as_user",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_expiration",
+                    "data_type": "string",
+                    "example_values": [
+                        "Never"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_exposure",
+                    "data_type": "string",
+                    "example_values": [
+                        "Public"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_format",
+                    "data_type": "string",
+                    "example_values": [
+                        "Python"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_text",
+                    "data_type": "string",
+                    "example_values": [
+                        "PasteBin text"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.paste_title",
+                    "data_type": "string",
+                    "example_values": [
+                        "PasteBin title"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.author",
+                    "data_type": "string",
+                    "example_values": [
+                        "Guest"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creation_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2022-07-04 09:25:27 UTC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.paste_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "PasteBin text"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.pasteid",
+                    "data_type": "string",
+                    "example_values": [
+                        "caCMuQtT"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.title",
+                    "data_type": "string",
+                    "example_values": [
+                        "PasteBin title"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.url",
+                    "data_type": "string",
+                    "contains": [
+                        "url"
+                    ],
+                    "column_name": "Paste URL",
+                    "column_order": 0,
+                    "example_values": [
+                        "https://pastebin.com/caCMuQtT"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Link obtained successfully"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
             "versions": "EQ(*)"
         }
     ],
@@ -122,51 +624,123 @@
         "wheel": [
             {
                 "module": "Django",
-                "input_file": "wheels/Django-1.11.29-py2.py3-none-any.whl"
+                "input_file": "wheels/py3/Django-3.2.15-py3-none-any.whl"
             },
             {
-                "module": "backports.functools_lru_cache",
-                "input_file": "wheels/backports.functools_lru_cache-1.6.4-py2.py3-none-any.whl"
+                "module": "asgiref",
+                "input_file": "wheels/py3/asgiref-3.4.1-py3-none-any.whl"
             },
             {
                 "module": "beautifulsoup4",
-                "input_file": "wheels/beautifulsoup4-4.9.1-py2-none-any.whl"
+                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/certifi-2021.10.8-py2.py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2022.9.24-py3-none-any.whl"
             },
             {
                 "module": "chardet",
-                "input_file": "wheels/chardet-3.0.4-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/chardet-3.0.4-py2.py3-none-any.whl"
             },
             {
                 "module": "idna",
-                "input_file": "wheels/idna-2.10-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/idna-2.10-py2.py3-none-any.whl"
             },
             {
                 "module": "python_dateutil",
-                "input_file": "wheels/python_dateutil-2.8.1-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/python_dateutil-2.8.1-py2.py3-none-any.whl"
             },
             {
                 "module": "pytz",
-                "input_file": "wheels/pytz-2020.1-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/pytz-2020.1-py2.py3-none-any.whl"
             },
             {
                 "module": "requests",
-                "input_file": "wheels/requests-2.25.0-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/requests-2.25.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "simplejson",
+                "input_file": "wheels/py36/simplejson-3.17.2-cp36-cp36m-manylinux2010_x86_64.manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
             },
             {
                 "module": "six",
-                "input_file": "wheels/six-1.16.0-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/six-1.16.0-py2.py3-none-any.whl"
             },
             {
                 "module": "soupsieve",
-                "input_file": "wheels/soupsieve-1.9.6-py2.py3-none-any.whl"
+                "input_file": "wheels/py3/soupsieve-2.3.2.post1-py3-none-any.whl"
+            },
+            {
+                "module": "sqlparse",
+                "input_file": "wheels/py3/sqlparse-0.4.3-py3-none-any.whl"
+            },
+            {
+                "module": "typing_extensions",
+                "input_file": "wheels/py3/typing_extensions-4.1.1-py3-none-any.whl"
             },
             {
                 "module": "urllib3",
-                "input_file": "wheels/urllib3-1.26.7-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/urllib3-1.26.12-py2.py3-none-any.whl"
+            }
+        ]
+    },
+    "pip39_dependencies": {
+        "wheel": [
+            {
+                "module": "Django",
+                "input_file": "wheels/py3/Django-3.2.15-py3-none-any.whl"
+            },
+            {
+                "module": "asgiref",
+                "input_file": "wheels/py3/asgiref-3.5.2-py3-none-any.whl"
+            },
+            {
+                "module": "beautifulsoup4",
+                "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
+            },
+            {
+                "module": "certifi",
+                "input_file": "wheels/py3/certifi-2022.9.24-py3-none-any.whl"
+            },
+            {
+                "module": "chardet",
+                "input_file": "wheels/shared/chardet-3.0.4-py2.py3-none-any.whl"
+            },
+            {
+                "module": "idna",
+                "input_file": "wheels/shared/idna-2.10-py2.py3-none-any.whl"
+            },
+            {
+                "module": "python_dateutil",
+                "input_file": "wheels/shared/python_dateutil-2.8.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "pytz",
+                "input_file": "wheels/shared/pytz-2020.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "requests",
+                "input_file": "wheels/shared/requests-2.25.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "simplejson",
+                "input_file": "wheels/py39/simplejson-3.17.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+            },
+            {
+                "module": "six",
+                "input_file": "wheels/shared/six-1.16.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "soupsieve",
+                "input_file": "wheels/py3/soupsieve-2.3.2.post1-py3-none-any.whl"
+            },
+            {
+                "module": "sqlparse",
+                "input_file": "wheels/py3/sqlparse-0.4.3-py3-none-any.whl"
+            },
+            {
+                "module": "urllib3",
+                "input_file": "wheels/shared/urllib3-1.26.12-py2.py3-none-any.whl"
             }
         ]
     }
