@@ -1,4 +1,0 @@
-.git*
-*.py
-.bak*
-README.md
