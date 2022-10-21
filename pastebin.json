@@ -7,8 +7,8 @@
     "type": "information",
     "license": "Copyright (c) 2019-2022 Splunk Inc.",
     "main_module": "pastebin_connector.py",
-    "app_version": "2.0.0",
-    "utctime_updated": "2022-01-07T21:29:06.000000Z",
+    "app_version": "2.0.1",
+    "utctime_updated": "2022-10-20T07:03:14.000000Z",
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
@@ -624,7 +624,7 @@
         "wheel": [
             {
                 "module": "Django",
-                "input_file": "wheels/py3/Django-3.2.15-py3-none-any.whl"
+                "input_file": "wheels/py3/Django-3.2.16-py3-none-any.whl"
             },
             {
                 "module": "asgiref",
@@ -688,7 +688,7 @@
         "wheel": [
             {
                 "module": "Django",
-                "input_file": "wheels/py3/Django-3.2.15-py3-none-any.whl"
+                "input_file": "wheels/py3/Django-3.2.16-py3-none-any.whl"
             },
             {
                 "module": "asgiref",

@@ -2,7 +2,7 @@
 # PasteBin
 
 Publisher: Splunk  
-Connector Version: 2\.0\.0  
+Connector Version: 2\.0\.1  
 Product Vendor: PasteBin  
 Product Name: PasteBin  
 Product Version Supported (regex): "\.\*"  
