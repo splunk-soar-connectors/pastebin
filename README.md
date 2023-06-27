@@ -2,11 +2,11 @@
 # PasteBin
 
 Publisher: Splunk  
-Connector Version: 2\.0\.2  
+Connector Version: 2.0.2  
 Product Vendor: PasteBin  
 Product Name: PasteBin  
-Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.3\.3  
+Product Version Supported (regex): ".\*"  
+Minimum Product Version: 5.3.3  
 
 This app integrates with PasteBin to perform investigative and generic actions
 
@@ -164,9 +164,9 @@ The below configuration variables are required for this Connector to operate.  T
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
-**api\_dev\_key** |  required  | password | API dev key
-**pastebin\_username** |  optional  | string | Username
-**pastebin\_password** |  optional  | password | Password
+**api_dev_key** |  required  | password | API dev key
+**pastebin_username** |  optional  | string | Username
+**pastebin_password** |  optional  | password | Password
 
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration  
@@ -194,23 +194,23 @@ Read only: **True**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**paste\_url** |  required  | PasteBin URL to fetch the data | string |  `url` 
+**paste_url** |  required  | PasteBin URL to fetch the data | string |  `url` 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.paste\_url | string |  `url` 
-action\_result\.data\.\*\.author | string | 
-action\_result\.data\.\*\.creation\_time | string | 
-action\_result\.data\.\*\.paste\_data | string | 
-action\_result\.data\.\*\.pasteid | string | 
-action\_result\.data\.\*\.title | string | 
-action\_result\.data\.\*\.vault\_id | string | 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.paste_url | string |  `url`  |   https://pastebin.com/caCMuQtT 
+action_result.data.\*.author | string |  |   Guest 
+action_result.data.\*.creation_time | string |  |   2016-12-30 18:57:49 UTC 
+action_result.data.\*.paste_data | string |  |   PasteBin text 
+action_result.data.\*.pasteid | string |  |   caCMuQtT 
+action_result.data.\*.title | string |  |   Phantom Test Paste 
+action_result.data.\*.vault_id | string |  |   8f34774262c4bcda0b2161f0ba34af8e80aa1bd9 
+action_result.summary | string |  |  
+action_result.message | string |  |   File added successfully to vault 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'create paste'
 Create a paste from PasteBin
@@ -221,30 +221,30 @@ Read only: **False**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**paste\_text** |  required  | PasteBin text to paste | string | 
-**paste\_title** |  optional  | PasteBin title to paste | string | 
-**paste\_format** |  optional  | PasteBin format to paste | string | 
-**paste\_exposure** |  optional  | PasteBin paste to be marked as public, private, or unlisted | string | 
-**paste\_expiration** |  optional  | PasteBin paste expiration time | string | 
-**paste\_as\_user** |  optional  | Paste as user | boolean | 
+**paste_text** |  required  | PasteBin text to paste | string | 
+**paste_title** |  optional  | PasteBin title to paste | string | 
+**paste_format** |  optional  | PasteBin format to paste | string | 
+**paste_exposure** |  optional  | PasteBin paste to be marked as public, private, or unlisted | string | 
+**paste_expiration** |  optional  | PasteBin paste expiration time | string | 
+**paste_as_user** |  optional  | Paste as user | boolean | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.paste\_as\_user | boolean | 
-action\_result\.parameter\.paste\_expiration | string | 
-action\_result\.parameter\.paste\_exposure | string | 
-action\_result\.parameter\.paste\_format | string | 
-action\_result\.parameter\.paste\_text | string | 
-action\_result\.parameter\.paste\_title | string | 
-action\_result\.data\.\*\.author | string | 
-action\_result\.data\.\*\.creation\_time | string | 
-action\_result\.data\.\*\.paste\_data | string | 
-action\_result\.data\.\*\.pasteid | string | 
-action\_result\.data\.\*\.title | string | 
-action\_result\.data\.\*\.url | string |  `url` 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric | 
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.paste_as_user | boolean |  |   True  False 
+action_result.parameter.paste_expiration | string |  |   Never 
+action_result.parameter.paste_exposure | string |  |   Public 
+action_result.parameter.paste_format | string |  |   Python 
+action_result.parameter.paste_text | string |  |   PasteBin text 
+action_result.parameter.paste_title | string |  |   PasteBin title 
+action_result.data.\*.author | string |  |   Guest 
+action_result.data.\*.creation_time | string |  |   2022-07-04 09:25:27 UTC 
+action_result.data.\*.paste_data | string |  |   PasteBin text 
+action_result.data.\*.pasteid | string |  |   caCMuQtT 
+action_result.data.\*.title | string |  |   PasteBin title 
+action_result.data.\*.url | string |  `url`  |   https://pastebin.com/caCMuQtT 
+action_result.summary | string |  |  
+action_result.message | string |  |   Link obtained successfully 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1 
