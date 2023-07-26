@@ -1,6 +1,6 @@
 # File: pastebin_connector.py
 #
-# Copyright (c) 2019-2022 Splunk Inc.
+# Copyright (c) 2019-2023 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -102,7 +102,7 @@ class PasteBinConnector(BaseConnector):
         :param e: Exception object
         :return: error message
         """
-        error_msg = PASTEBIN_ERROR_MESSAGE
+        error_message = PASTEBIN_ERROR_MESSAGE
         error_code = PASTEBIN_ERROR_CODE_MESSAGE
         self.error_print("Traceback: {}".format(traceback.format_stack()))
 
@@ -110,17 +110,17 @@ class PasteBinConnector(BaseConnector):
             if hasattr(e, "args"):
                 if len(e.args) > 1:
                     error_code = e.args[0]
-                    error_msg = e.args[1]
+                    error_message = e.args[1]
                 elif len(e.args) == 1:
                     error_code = PASTEBIN_ERROR_CODE_MESSAGE
-                    error_msg = e.args[0]
+                    error_message = e.args[0]
         except Exception as ex:
             self.error_print("Error occurred while retrieving exception information: ", ex)
 
         if not error_code:
-            error_text = "Error Message: {}".format(error_msg)
+            error_text = "Error Message: {}".format(error_message)
         else:
-            error_text = PASTEBIN_ERROR_MESSAGE_FORMAT.format(error_code, error_msg)
+            error_text = PASTEBIN_ERROR_MESSAGE_FORMAT.format(error_code, error_message)
 
         return error_text
 
@@ -228,7 +228,7 @@ class PasteBinConnector(BaseConnector):
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
-        self.save_progress(PASTEBIN_CONNECTION_MSG)
+        self.save_progress(PASTEBIN_CONNECTION_MESSAGE)
 
         api_paste_code = "Test connectivity checked"
 
@@ -238,10 +238,10 @@ class PasteBinConnector(BaseConnector):
             api_paste_code
         )
         if phantom.is_fail(ret_val):
-            self.save_progress(PASTEBIN_CONNECTIVITY_FAIL_MSG)
+            self.save_progress(PASTEBIN_CONNECTIVITY_FAIL_MESSAGE)
             return action_result.get_status()
 
-        self.save_progress(PASTEBIN_CONNECTIVITY_PASS_MSG)
+        self.save_progress(PASTEBIN_CONNECTIVITY_PASS_MESSAGE)
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _get_user_key(self, action_result, pastebin_username, pastebin_password):
