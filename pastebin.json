@@ -7,7 +7,7 @@
     "type": "information",
     "license": "Copyright (c) 2019-2023 Splunk Inc.",
     "main_module": "pastebin_connector.py",
-    "app_version": "2.0.3",
+    "app_version": "2.0.2",
     "utctime_updated": "2022-10-20T07:03:14.000000Z",
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
