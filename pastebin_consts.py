@@ -1,6 +1,6 @@
 # File: pastebin_consts.py
 #
-# Copyright (c) 2019-2022 Splunk Inc.
+# Copyright (c) 2019-2023 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,15 +14,11 @@
 # and limitations under the License.
 #
 #
-# State file
-PASTEBIN_STATE_FILE_CORRUPT_ERR = (
-    "Error occurred while loading the state file due to its unexpected format."
-    "Resetting the state file with the default format. Please try again."
-)
+
 # Test Connectivity endpoints
-PASTEBIN_CONNECTION_MSG = "Querying endpoint to verify the credentials provided"
-PASTEBIN_CONNECTIVITY_FAIL_MSG = "Test connectivity failed"
-PASTEBIN_CONNECTIVITY_PASS_MSG = "Test connectivity passed"
+PASTEBIN_CONNECTION_MESSAGE = "Querying endpoint to verify the credentials provided"
+PASTEBIN_CONNECTIVITY_FAIL_MESSAGE = "Test connectivity failed"
+PASTEBIN_CONNECTIVITY_PASS_MESSAGE = "Test connectivity passed"
 DEFAULT_TIMEOUT_SECONDS = 30
 # Creating paste
 PASTEBIN_CREATING_PASTE_URL = "https://pastebin.com/api/api_post.php"
