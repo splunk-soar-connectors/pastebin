@@ -6,7 +6,7 @@ Connector Version: 2.0.2
 Product Vendor: PasteBin  
 Product Name: PasteBin  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 5.3.3  
+Minimum Product Version: 5.5.0  
 
 This app integrates with PasteBin to perform investigative and generic actions
 
