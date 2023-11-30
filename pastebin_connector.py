@@ -65,12 +65,8 @@ class PasteBinConnector(BaseConnector):
     def _add_file_to_vault(self, action_result, file_name, container_id, file_data):
         success = True
 
-        if hasattr(Vault, 'get_vault_tmp_dir'):
-            temp_dir = Vault.get_vault_tmp_dir()
-        else:
-            temp_dir = "opt/phantom/vault/tmp"
-
-        temp_dir = temp_dir + '/{}'.format(uuid.uuid4())
+        vault_tmp_dir = Vault.get_vault_tmp_dir()
+        temp_dir = vault_tmp_dir + '/{}'.format(uuid.uuid4())
         os.makedirs(temp_dir)
         fname = os.path.join(temp_dir, file_name)
 
