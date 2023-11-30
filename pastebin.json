@@ -12,7 +12,7 @@
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "5.3.3",
+    "min_phantom_version": "5.5.0",
     "app_wizard_version": "1.0.0",
     "python_version": "3",
     "logo": "logo_pastebin.svg",
