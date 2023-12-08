@@ -621,7 +621,7 @@
         }
     ],
     "pip_dependencies": {
-        "pypi": [
+        "wheel": [
             {
                 "module": "beautifulsoup4",
                 "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"
@@ -649,7 +649,7 @@
         ]
     },
     "pip39_dependencies": {
-        "pypi": [
+        "wheel": [
             {
                 "module": "beautifulsoup4",
                 "input_file": "wheels/py3/beautifulsoup4-4.9.1-py3-none-any.whl"

@@ -437,7 +437,7 @@ class PasteBinConnector(BaseConnector):
                 })
 
                 self.save_progress("Saving paste to vault...")
-                ret_val = self._add_file_to_vault(action_result, f"{pasteid}.txt", container_id, paste_data)
+                ret_val = self._add_file_to_vault(action_result, pasteid + '.txt', container_id, paste_data)
                 if phantom.is_fail(ret_val):
                     return action_result.get_status()
             return action_result.set_status(phantom.APP_SUCCESS, "File added to vault successfully")
