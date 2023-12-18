@@ -15,14 +15,11 @@
 #
 #
 # Python 3 Compatibility imports
-import os
 import traceback
 import urllib.parse
-import uuid
 from urllib.parse import urlparse
 
 import phantom.app as phantom
-import phantom.rules as ph_rules
 import pytz
 import requests
 import simplejson as json
@@ -63,39 +60,18 @@ class PasteBinConnector(BaseConnector):
         return t.astimezone(pytz.timezone(client_tz.zone)).strftime("%Y-%m-%d %H:%M:%S %Z")
 
     def _add_file_to_vault(self, action_result, file_name, container_id, file_data):
-        success = True
-
-        if hasattr(Vault, 'get_vault_tmp_dir'):
-            temp_dir = Vault.get_vault_tmp_dir()
-        else:
-            temp_dir = "opt/phantom/vault/tmp"
-
-        temp_dir = temp_dir + '/{}'.format(uuid.uuid4())
-        os.makedirs(temp_dir)
-        fname = os.path.join(temp_dir, file_name)
-
         try:
-            with open(fname, "w") as outfile:
-                outfile.write(smart_str(file_data))
-        except IOError:
-            success = False
+            resp = Vault.create_attachment(smart_str(file_data), container_id, file_name=file_name)
+        except Exception as ex:
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                f"Unable to add file to the vault for attachment name: "
+                f"{file_name}. Error: "
+                f"{self._get_error_message_from_exception(ex)}"
+            )
+        action_result.add_data({"vault_id": resp['vault_id']})
 
-        if success:
-            # Save attachment file to the vault
-            try:
-                success, message, attachment_vault_id = ph_rules.vault_add(
-                    container=container_id,
-                    file_location=fname,
-                    file_name=None
-                )
-                if not success:
-                    return action_result.set_status(phantom.APP_ERROR, message)
-                action_result.add_data({"vault_id": attachment_vault_id})
-
-            except Exception as e:
-                error_msg = "Unable to add file to the vault for attachment name: {0}. Error: {1}".format(
-                    fname, self._get_error_message_from_exception(e))
-                return action_result.set_status(phantom.APP_ERROR, error_msg)
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully added file to the vault.")
 
     def _get_error_message_from_exception(self, e):
         """This function is used to get appropriate error message from the exception.
@@ -461,7 +437,9 @@ class PasteBinConnector(BaseConnector):
                 })
 
                 self.save_progress("Saving paste to vault...")
-                self._add_file_to_vault(action_result, pasteid + '.txt', container_id, paste_data)
+                ret_val = self._add_file_to_vault(action_result, pasteid + '.txt', container_id, paste_data)
+                if phantom.is_fail(ret_val):
+                    return action_result.get_status()
             return action_result.set_status(phantom.APP_SUCCESS, "File added to vault successfully")
 
         except Exception as e:

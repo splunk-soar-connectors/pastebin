@@ -12,7 +12,7 @@
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "5.3.3",
+    "min_phantom_version": "6.1.1",
     "app_wizard_version": "1.0.0",
     "python_version": "3",
     "logo": "logo_pastebin.svg",
@@ -672,7 +672,7 @@
             },
             {
                 "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.4.1-py3-none-any.whl"
+                "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
             }
         ]
     }
