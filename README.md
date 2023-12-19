@@ -2,11 +2,11 @@
 # PasteBin
 
 Publisher: Splunk  
-Connector Version: 2.0.2  
+Connector Version: 2.0.3  
 Product Vendor: PasteBin  
 Product Name: PasteBin  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 5.3.3  
+Minimum Product Version: 6.1.1  
 
 This app integrates with PasteBin to perform investigative and generic actions
 

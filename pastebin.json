@@ -7,12 +7,12 @@
     "type": "information",
     "license": "Copyright (c) 2019-2023 Splunk Inc.",
     "main_module": "pastebin_connector.py",
-    "app_version": "2.0.2",
-    "utctime_updated": "2022-10-20T07:03:14.000000Z",
+    "app_version": "2.0.3",
+    "utctime_updated": "2023-12-18T07:30:44.000000Z",
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "5.3.3",
+    "min_phantom_version": "6.1.1",
     "app_wizard_version": "1.0.0",
     "python_version": "3",
     "logo": "logo_pastebin.svg",
@@ -672,7 +672,7 @@
             },
             {
                 "module": "soupsieve",
-                "input_file": "wheels/py3/soupsieve-2.4.1-py3-none-any.whl"
+                "input_file": "wheels/py3/soupsieve-2.5-py3-none-any.whl"
             }
         ]
     }
