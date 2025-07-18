@@ -32,9 +32,11 @@ from phantom.vault import Vault
 
 from pastebin_consts import *
 
+
 # Disable SSL warnings - modern approach
 try:
     import urllib3
+
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 except ImportError:
     pass
