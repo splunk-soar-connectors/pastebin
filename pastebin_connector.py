@@ -33,7 +33,13 @@ from phantom.vault import Vault
 from pastebin_consts import *
 
 
-requests.packages.urllib3.disable_warnings()
+# Disable SSL warnings - modern approach
+try:
+    import urllib3
+
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+except ImportError:
+    pass
 
 
 class RetVal(tuple):
@@ -117,7 +123,9 @@ class PasteBinConnector(BaseConnector):
         if 200 <= response.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_txt)
 
-        if status_code == 403 or 404:
+        error_message = resp_txt
+
+        if status_code == 403 or status_code == 404:
             try:
                 soup = BeautifulSoup(response.text, "html.parser")
                 # Remove the script, style, footer and navigation part from the HTML message
