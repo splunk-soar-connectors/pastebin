@@ -1,4 +1,0 @@
-beautifulsoup4==4.9.1
-python-dateutil==2.8.1
-pytz==2020.1
-simplejson==3.17.2
