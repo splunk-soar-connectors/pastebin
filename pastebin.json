@@ -621,27 +621,9 @@
         }
     ],
     "pip39_dependencies": {
-        "wheel": [
-            {
-                "module": "pytz",
-                "input_file": "wheels/shared/pytz-2020.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "simplejson",
-                "input_file": "wheels/py39/simplejson-3.17.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl"
-            }
-        ]
+        "wheel": []
     },
     "pip313_dependencies": {
-        "wheel": [
-            {
-                "module": "pytz",
-                "input_file": "wheels/shared/pytz-2020.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "simplejson",
-                "input_file": "wheels/py313/simplejson-3.17.2-cp313-cp313-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_28_x86_64.whl"
-            }
-        ]
+        "wheel": []
     }
 }

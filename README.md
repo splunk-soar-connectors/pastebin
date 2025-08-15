@@ -1,9 +1,9 @@
 # PasteBin
 
-Publisher: Splunk \
-Connector Version: 2.0.4 \
-Product Vendor: PasteBin \
-Product Name: PasteBin \
+Publisher: Splunk <br>
+Connector Version: 2.0.4 <br>
+Product Vendor: PasteBin <br>
+Product Name: PasteBin <br>
 Minimum Product Version: 6.1.1
 
 This app integrates with PasteBin to perform investigative and generic actions
@@ -135,15 +135,15 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration \
-[get data](#action-get-data) - Download, parse, and save a paste from PasteBin \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration <br>
+[get data](#action-get-data) - Download, parse, and save a paste from PasteBin <br>
 [create paste](#action-create-paste) - Create a paste from PasteBin
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using the supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -158,7 +158,7 @@ No Output
 
 Download, parse, and save a paste from PasteBin
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -188,7 +188,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Create a paste from PasteBin
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
