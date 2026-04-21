@@ -1,7 +1,7 @@
 # PasteBin
 
 Publisher: Splunk <br>
-Connector Version: 2.0.5 <br>
+Connector Version: 2.0.6 <br>
 Product Vendor: PasteBin <br>
 Product Name: PasteBin <br>
 Minimum Product Version: 6.1.1

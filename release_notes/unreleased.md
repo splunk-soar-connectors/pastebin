@@ -1,2 +1,1 @@
 **Unreleased**
-* update pre-commit
