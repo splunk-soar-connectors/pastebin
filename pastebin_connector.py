@@ -325,9 +325,7 @@ class PasteBinConnector(BaseConnector):
     def _get_paste_data(self, action_result, pasteid):
         url = (GET_PASTE_DATA_URL).format(pasteid)
 
-        ret_val, response = self._make_rest_call(
-            url=url, action_result=action_result, timeout=30, method="get", allow_redirects=False
-        )
+        ret_val, response = self._make_rest_call(url=url, action_result=action_result, timeout=30, method="get", allow_redirects=False)
         if phantom.is_fail(ret_val):
             return action_result.get_status(), None
 
@@ -363,9 +361,7 @@ class PasteBinConnector(BaseConnector):
 
         try:
             self.save_progress(f"Fetching paste with ID {pasteid}")
-            ret_val, response = self._make_rest_call(
-                url=url, action_result=action_result, timeout=30, method="get", allow_redirects=False
-            )
+            ret_val, response = self._make_rest_call(url=url, action_result=action_result, timeout=30, method="get", allow_redirects=False)
             if phantom.is_fail(ret_val):
                 return action_result.get_status()
 
