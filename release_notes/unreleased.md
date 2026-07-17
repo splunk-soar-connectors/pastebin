@@ -1,3 +1,1 @@
 **Unreleased**
-
-* Restrict paste downloads to validated HTTPS PasteBin URLs, disable redirects, and omit unexpected response bodies from errors. [PSAAS-30643]
