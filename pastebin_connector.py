@@ -15,6 +15,7 @@
 #
 #
 # Python 3 Compatibility imports
+import re
 import traceback
 import urllib.parse
 from urllib.parse import urlparse
@@ -161,7 +162,7 @@ class PasteBinConnector(BaseConnector):
         # store the r_text in debug data, it will get dumped in the logs if the action fails
         if hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data({"r_status_code": r.status_code})
-            action_result.add_debug_data({"r_text": r.text})
+            action_result.add_debug_data({"r_text": r.text[:PASTEBIN_DEBUG_RESPONSE_LENGTH]})
             action_result.add_debug_data({"r_headers": r.headers})
 
         if "html" in r.headers.get("Content-Type", ""):
@@ -173,9 +174,7 @@ class PasteBinConnector(BaseConnector):
         if not r.text:
             return self._process_empty_response(r, action_result)
 
-        message = "Can't process response from server. Status Code: {} Data from server: {}".format(
-            r.status_code, r.text.replace("{", "{{").replace("}", "}}")
-        )
+        message = f"Can't process response from server. Status Code: {r.status_code}"
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -326,7 +325,7 @@ class PasteBinConnector(BaseConnector):
     def _get_paste_data(self, action_result, pasteid):
         url = (GET_PASTE_DATA_URL).format(pasteid)
 
-        ret_val, response = self._make_rest_call(url=url, action_result=action_result, timeout=30, method="get")
+        ret_val, response = self._make_rest_call(url=url, action_result=action_result, timeout=30, method="get", allow_redirects=False)
         if phantom.is_fail(ret_val):
             return action_result.get_status(), None
 
@@ -337,9 +336,23 @@ class PasteBinConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         container_id = self.get_container_id()
 
-        url = param["paste_url"]
         try:
-            pasteid = urlparse(url).path.strip("/")
+            parsed_url = urlparse(param["paste_url"])
+            path_parts = [part for part in parsed_url.path.split("/") if part]
+            if (
+                parsed_url.scheme.lower() != "https"
+                or parsed_url.hostname != PASTEBIN_HOST
+                or parsed_url.port not in (None, 443)
+                or parsed_url.username is not None
+                or parsed_url.password is not None
+                or parsed_url.query
+                or parsed_url.fragment
+                or len(path_parts) != 1
+                or not re.fullmatch(PASTEBIN_ID_PATTERN, path_parts[0])
+            ):
+                raise ValueError("URL must be an HTTPS PasteBin paste URL")
+            pasteid = path_parts[0]
+            url = PASTEBIN_PASTE_URL.format(pasteid)
         except Exception as e:
             error_msg = (
                 f"Unable to get paste id from the URL. Please provide valid 'paste url' parameter. {self._get_error_message_from_exception(e)}"
@@ -348,7 +361,7 @@ class PasteBinConnector(BaseConnector):
 
         try:
             self.save_progress(f"Fetching paste with ID {pasteid}")
-            ret_val, response = self._make_rest_call(url=url, action_result=action_result, timeout=30, method="get")
+            ret_val, response = self._make_rest_call(url=url, action_result=action_result, timeout=30, method="get", allow_redirects=False)
             if phantom.is_fail(ret_val):
                 return action_result.get_status()
 

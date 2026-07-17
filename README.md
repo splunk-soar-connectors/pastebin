@@ -165,7 +165,7 @@ Read only: **True**
 
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**paste_url** | required | PasteBin URL to fetch the data | string | `url` |
+**paste_url** | required | HTTPS PasteBin paste URL (for example, https://pastebin.com/AbCd1234) | string | `url` |
 
 #### Action Output
 

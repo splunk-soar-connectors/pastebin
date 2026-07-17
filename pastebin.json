@@ -58,7 +58,7 @@
             "read_only": true,
             "parameters": {
                 "paste_url": {
-                    "description": "PasteBin URL to fetch the data",
+                    "description": "HTTPS PasteBin paste URL (for example, https://pastebin.com/AbCd1234)",
                     "data_type": "string",
                     "contains": [
                         "url"
