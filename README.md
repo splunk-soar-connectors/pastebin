@@ -4,7 +4,7 @@ Publisher: Splunk <br>
 Connector Version: 3.0.0 <br>
 Product Vendor: PasteBin <br>
 Product Name: PasteBin <br>
-Minimum Product Version: 6.1.1
+Minimum Product Version: 6.3.0
 
 This app integrates with PasteBin to perform investigative and generic actions
 
