@@ -35,6 +35,9 @@ PASTEBIN_HOST = "pastebin.com"
 PASTEBIN_PASTE_URL = "https://pastebin.com/{}"
 PASTEBIN_ID_PATTERN = r"[A-Za-z0-9]{1,32}"
 PASTEBIN_DEBUG_RESPONSE_LENGTH = 1024
+PASTEBIN_MAX_DOWNLOAD_BYTES = 10 * 1024 * 1024
+PASTEBIN_DOWNLOAD_CHUNK_SIZE = 64 * 1024
+PASTEBIN_DOWNLOAD_TOO_LARGE_MESSAGE = "PasteBin response exceeds the 10 MiB download limit"
 # Error messages
 PASTEBIN_ERROR_MESSAGE = "Unknown error occurred. Please check the asset configuration and|or action parameters"
 PASTEBIN_ERROR_CODE_MESSAGE = "Error code unavailable"

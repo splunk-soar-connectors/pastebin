@@ -63,6 +63,7 @@ Pastebin password.
   To download, parse, and save a paste from PasteBin, the user can run this action. After a
   successful run of the action, the text file will be generated with paste data and stored in the
   vault.\
+  Paste pages and raw paste data are limited to 10 MiB per response.
   [![](img/get_data_details.png)](img/get_data_details.png)
 
   - **Action Parameter** : Pastebin URL
