@@ -4,7 +4,7 @@ Publisher: Splunk <br>
 Connector Version: 3.0.0 <br>
 Product Vendor: PasteBin <br>
 Product Name: PasteBin <br>
-Minimum Product Version: 6.1.1
+Minimum Product Version: 6.3.0
 
 This app integrates with PasteBin to perform investigative and generic actions
 
@@ -38,11 +38,12 @@ Follow these steps to configure the PasteBin Splunk SOAR app's asset:
   - Navigate to the **Asset Info** tab and enter the Asset name and Asset description.
   - Navigate to the **Asset Settings** .
   - Paste the generated **API Key** from PasteBin UI to its respective configuration parameter.
-  - Pastebin username and password are optional parameters. To create any paste as user, you
-    need to provide credentials for the same.
+  - Pastebin username and password are optional for actions that do not authenticate a user. They
+    are required to create a paste as a user and to run test connectivity.
   - Save the asset.
   - Now, test the connectivity of the Splunk SOAR server to the PasteBin instance by clicking
-    the **TEST CONNECTIVITY** button.
+    the **TEST CONNECTIVITY** button. The test validates the configured credentials through
+    PasteBin's read-only login endpoint without creating a paste.
 
 ## Explanation of the Asset Configuration Parameters
 
@@ -53,6 +54,7 @@ Pastebin password.
 - **Pastebin api dev key (Required):** API Token for asset authorization.
 - **Pastebin username (Optional):** The username of your PasteBin account.
 - **Pastebin password (Optional):** The password of your PasteBin account.
+- **Test connectivity:** Username and password are required for this action.
 - NOTE: The developer API key, username, and password, all must belong to one particular account
   to create paste as a user.
 
@@ -60,8 +62,8 @@ Pastebin password.
 
 - ### Test Connectivity (Action Workflow Details)
 
-  - This action will test the connectivity of the Splunk SOAR server to the PasteBin instance by
-    making an initial API call using the provided asset configuration parameters.
+  - This action validates the developer key, username, and password through PasteBin's read-only
+    login endpoint and does not create a paste.
   - The action validates the provided asset configuration parameters. Based on the API call
     response, the appropriate success and failure message will be displayed when the action gets
     executed.
@@ -71,6 +73,7 @@ Pastebin password.
   To download, parse, and save a paste from PasteBin, the user can run this action. After a
   successful run of the action, the text file will be generated with paste data and stored in the
   vault.\
+  Paste pages and raw paste data are limited to 10 MiB per response.
   [![](img/get_data_details.png)](img/get_data_details.png)
 
   - **Action Parameter** : Pastebin URL
@@ -135,13 +138,13 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using the supplied configuration <br>
+[test connectivity](#action-test-connectivity) - Validate the developer key, username, and password using PasteBin's read-only login endpoint <br>
 [get data](#action-get-data) - Download, parse, and save a paste from PasteBin <br>
 [create paste](#action-create-paste) - Create a paste from PasteBin
 
 ## action: 'test connectivity'
 
-Validate the asset configuration for connectivity using the supplied configuration
+Validate the developer key, username, and password using PasteBin's read-only login endpoint
 
 Type: **test** <br>
 Read only: **True**

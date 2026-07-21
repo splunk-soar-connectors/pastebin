@@ -199,14 +199,62 @@ class PasteBinConnector(BaseConnector):
 
         return self._process_response(requests_response, action_result)
 
+    def _get_bounded_text(self, url, action_result):
+        try:
+            with requests.get(
+                url,
+                timeout=DEFAULT_TIMEOUT_SECONDS,
+                allow_redirects=False,
+                stream=True,
+            ) as response:
+                if not (200 <= response.status_code < 300):
+                    return RetVal(
+                        action_result.set_status(
+                            phantom.APP_ERROR,
+                            f"PasteBin returned HTTP status {response.status_code}",
+                        ),
+                        None,
+                    )
+
+                content_length = response.headers.get("Content-Length")
+                if content_length:
+                    try:
+                        if int(content_length) > PASTEBIN_MAX_DOWNLOAD_BYTES:
+                            return RetVal(action_result.set_status(phantom.APP_ERROR, PASTEBIN_DOWNLOAD_TOO_LARGE_MESSAGE), None)
+                    except ValueError:
+                        self.debug_print("PasteBin returned an invalid Content-Length header")
+
+                response_bytes = bytearray()
+                for chunk in response.iter_content(chunk_size=PASTEBIN_DOWNLOAD_CHUNK_SIZE):
+                    if not chunk:
+                        continue
+                    if len(response_bytes) + len(chunk) > PASTEBIN_MAX_DOWNLOAD_BYTES:
+                        return RetVal(action_result.set_status(phantom.APP_ERROR, PASTEBIN_DOWNLOAD_TOO_LARGE_MESSAGE), None)
+                    response_bytes.extend(chunk)
+
+                encoding = response.encoding or "utf-8"
+                return RetVal(phantom.APP_SUCCESS, response_bytes.decode(encoding, errors="replace"))
+        except Exception as e:
+            return RetVal(
+                action_result.set_status(
+                    phantom.APP_ERROR,
+                    f"Error connecting to server. Details: {self._get_error_message_from_exception(e)}",
+                ),
+                None,
+            )
+
     def _handle_test_connectivity(self, param):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
         self.save_progress(PASTEBIN_CONNECTION_MESSAGE)
 
-        api_paste_code = "Test connectivity checked"
+        if not self._pastebin_username or not self._pastebin_password:
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                "Pastebin username and password are required for the read-only connectivity test",
+            )
 
-        ret_val, _ = self._creating_paste(action_result, self._api_key, api_paste_code)
+        ret_val, _ = self._get_user_key(action_result, self._pastebin_username, self._pastebin_password)
         if phantom.is_fail(ret_val):
             self.save_progress(PASTEBIN_CONNECTIVITY_FAIL_MESSAGE)
             return action_result.get_status()
@@ -325,7 +373,7 @@ class PasteBinConnector(BaseConnector):
     def _get_paste_data(self, action_result, pasteid):
         url = (GET_PASTE_DATA_URL).format(pasteid)
 
-        ret_val, response = self._make_rest_call(url=url, action_result=action_result, timeout=30, method="get", allow_redirects=False)
+        ret_val, response = self._get_bounded_text(url, action_result)
         if phantom.is_fail(ret_val):
             return action_result.get_status(), None
 
@@ -361,7 +409,7 @@ class PasteBinConnector(BaseConnector):
 
         try:
             self.save_progress(f"Fetching paste with ID {pasteid}")
-            ret_val, response = self._make_rest_call(url=url, action_result=action_result, timeout=30, method="get", allow_redirects=False)
+            ret_val, response = self._get_bounded_text(url, action_result)
             if phantom.is_fail(ret_val):
                 return action_result.get_status()
 

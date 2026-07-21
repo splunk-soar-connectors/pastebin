@@ -12,7 +12,7 @@
     "product_vendor": "PasteBin",
     "product_name": "PasteBin",
     "product_version_regex": ".*",
-    "min_phantom_version": "6.1.1",
+    "min_phantom_version": "6.3.0",
     "app_wizard_version": "1.0.0",
     "python_version": "3.9, 3.13",
     "logo": "logo_pastebin.svg",
@@ -43,7 +43,7 @@
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using the supplied configuration",
+            "description": "Validate the developer key, username, and password using PasteBin's read-only login endpoint",
             "type": "test",
             "read_only": true,
             "parameters": {},
