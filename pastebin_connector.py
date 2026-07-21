@@ -204,9 +204,13 @@ class PasteBinConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         self.save_progress(PASTEBIN_CONNECTION_MESSAGE)
 
-        api_paste_code = "Test connectivity checked"
+        if not self._pastebin_username or not self._pastebin_password:
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                "Pastebin username and password are required for the read-only connectivity test",
+            )
 
-        ret_val, _ = self._creating_paste(action_result, self._api_key, api_paste_code)
+        ret_val, _ = self._get_user_key(action_result, self._pastebin_username, self._pastebin_password)
         if phantom.is_fail(ret_val):
             self.save_progress(PASTEBIN_CONNECTIVITY_FAIL_MESSAGE)
             return action_result.get_status()

@@ -43,7 +43,7 @@
         {
             "action": "test connectivity",
             "identifier": "test_connectivity",
-            "description": "Validate the asset configuration for connectivity using the supplied configuration",
+            "description": "Validate the developer key, username, and password using PasteBin's read-only login endpoint",
             "type": "test",
             "read_only": true,
             "parameters": {},
